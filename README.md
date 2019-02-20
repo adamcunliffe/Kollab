@@ -20,4 +20,4 @@ Set up instructions
 * migrate your database
 * run the population script
 
-5) Then do git checkout -b <branch-name> to make a new branch and start working on whatever you want
+5) Then do git checkout -b _branch-name_ to make a new branch and start working on whatever you want
