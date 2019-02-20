@@ -1,9 +1,11 @@
 
 #based on: https://www.diveinto.org/python3/your-first-python-program.html#importsearchpath
 #anaconds search path is apparently incomplete?
-import sys
-sys.path.insert(0, 'D:\\Downloads\\Anaconda3\\envs\\kollab\\Lib\\site-packages')
-sys.path.insert(0, 'D:\\PythonWorkspace\\kollab_project')
+
+# If you are having trouble importing django then fill in and include the below script:
+#import sys
+#sys.path.insert(0, 'PATH_TO_ANACONDA\\Anaconda3\\envs\\kollab\\Lib\\site-packages')
+#sys.path.insert(0, 'PATH_TO_YOUR_PYHON_WORKSPACE\\PythonWorkspace\\kollab_project')
 
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kollab_project.settings')
