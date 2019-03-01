@@ -6,3 +6,6 @@ def index(request):
 	
 def login(request):
 	return render(request, 'kollab/login.html')
+	
+def signup(request):
+	return render(request, 'kollab/signup.html')

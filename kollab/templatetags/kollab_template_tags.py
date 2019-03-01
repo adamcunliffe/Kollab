@@ -7,4 +7,4 @@ register = template.Library()
 
 @register.simple_tag
 def bootstrap():
-	return os.path.join(settings.BASE_DIR, 'static/bootstrap/')
+	return '/static/bootstrap/'
