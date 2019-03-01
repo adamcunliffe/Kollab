@@ -20,6 +20,8 @@ from kollab import views, urls
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^$', views.index, name='index'),
+	url(r'^login/', views.login, name='login'),
+	url(r'^signup/', views.signup, name='signup'),
 	
 	# the below ensures that all urls that start 
 	# with kollab are dealt with by the urls.py in 
