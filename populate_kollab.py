@@ -7,6 +7,10 @@
 #sys.path.insert(0, 'PATH_TO_ANACONDA\\Anaconda3\\envs\\kollab\\Lib\\site-packages')
 #sys.path.insert(0, 'PATH_TO_YOUR_PYHON_WORKSPACE\\PythonWorkspace\\kollab_project')
 
+import sys
+sys.path.insert(0, 'D:\\Downloads\\Anaconda3\\envs\\kollab\\Lib\\site-packages')
+sys.path.insert(0, 'D:\\PythonWorkspace\\PythonWorkspace\\kollab_project')
+
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kollab_project.settings')
 
@@ -36,28 +40,44 @@ def populate():
 	# website used to get lat lon: https://www.mapcoordinates.net/en
 	# all lat lons refere to places around glasgow, starting from the centere & going out to dumbarton...dont know why I chose dumbarton...
 	users = [
-		{"name" : "Ananya",
+		{"firstName" : "Ananya",
+		 "lastName": "A",
+		 "email" : "Ananya@ex.com",
 		 "lat" : 55.84660244,
 		 "lon" : -4.2240715 },
-		 {"name" : "Barak",
+		 {"firstName" : "Barak",
+		  "lastName": "B",
+		 "email" : "Barak@ex.com",
 		 "lat" : 55.87473302,
 		 "lon" : -4.28724289 },
-		 {"name" : "Charlie",
+		 {"firstName" : "Charlie",
+		  "lastName": "C",
+		 "email" : "Charlie@ex.com",
 		 "lat" : 55.88407327,
 		 "lon" : -4.33616638 },
-		 {"name" : "David",
+		 {"firstName" : "David",
+		  "lastName": "D",
+		 "email" : "David@ex.com",
 		 "lat" : 55.90794326,
 		 "lon" : -4.40397263 },
-		 {"name" : "Ebo",
+		 {"firstName" : "Ebo",
+		  "lastName": "E",
+		 "email" : "Ebo@ex.com",
 		 "lat" : 55.86307864,
 		 "lon" : -4.21926498 },
-		 {"name" : "Faye",
+		 {"firstName" : "Faye",
+		  "lastName": "F",
+		 "email" : "Faye@ex.com",
 		 "lat" : 55.92497052,
 		 "lon" : -4.42337036 },
-		 {"name" : "Genevieve",
+		 {"firstName" : "Genevieve",
+		  "lastName": "G",
+		 "email" : "Genevieve@ex.com",
 		 "lat" : 55.94823863,
 		 "lon" : -4.5658493 },
-		 {"name" : "Haleigh",
+		 {"firstName" : "Haleigh",
+		  "lastName": "H",
+		 "email" : "Haleigh@ex.com",
 		 "lat" : 55.97802448,
 		 "lon" : -4.56550598 }]
 	
@@ -105,7 +125,7 @@ def populate():
 	# this loop assumes that the number of preset_membership == num of projects
 	for index in range(0,len(projects)):
 		for user in memberships[index]:
-			add_members(projects[index]['name'], user['user']['name'])
+			add_members(projects[index]['name'], user['user'])
 	
 	# this is a bit clunky but reflects the need to assign 
 	# realistic tags to each project...
@@ -133,7 +153,7 @@ def populate():
 		print(project.name)
 		if len(members) < len(tags):
 			for tag in range(0, len(tags)):
-				#modulo to distribute the tags among members
+				#modulo to distribute the tags among members when mem > tags
 				index = tag % len(members)
 				print(tags[tag])
 				print(members[index])
@@ -153,7 +173,7 @@ def add_tag(tag):
 	obj.save()
 	
 def add_user(user):
-	obj, created = User.objects.get_or_create(name=user['name'], lon=user['lon'], lat=user['lat'])
+	obj, created = User.objects.get_or_create(firstName=user['firstName'], lastName=user['lastName'], email=user['email'],lon=user['lon'], lat=user['lat'])
 	obj.save()
 	
 def add_projects(project):
@@ -164,7 +184,7 @@ def add_members(proj, user):
 	#print("add members:")
 	#print(proj)
 	#print(user)	
-	obj, created = Membership.objects.get_or_create(user=User.objects.get(name=user), project=Project.objects.get(name=proj))
+	obj, created = Membership.objects.get_or_create(user=User.objects.get(firstName=user['firstName'], lastName=user['lastName']), project=Project.objects.get(name=proj))
 	obj.save()
 
 def add_tags_to_project(proj, tag):

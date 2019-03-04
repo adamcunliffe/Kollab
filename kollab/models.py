@@ -17,7 +17,6 @@ classes to be added:
 class Tag(models.Model):
 	# Might need to make each tage unique to ensure association between people via tags
 	
-	# definatly enforce uniqueness
 	name = models.CharField(max_length=128)
 	
 	def __str__(self):
@@ -25,14 +24,16 @@ class Tag(models.Model):
 
 class User(models.Model):
 
-	name = models.CharField(max_length=128)
+	firstName = models.CharField(max_length=128)
+	lastName = models.CharField(max_length=128)
+	email = models.EmailField(null=True)
 	
 	# Users chosen location stored as latitude and longditude 
 	# floatfield is just a decimal number like 50.938892 or -14.324333
 	
 	# stop these from being in the constructor!!
-	lat = models.FloatField()
-	lon = models.FloatField()
+	lat = models.FloatField(blank=True)
+	lon = models.FloatField(blank=True)
 	
 	''' to be added:
 		portfolio --> one to one / one to many? --> portfolio class
@@ -47,7 +48,7 @@ class User(models.Model):
 	tags = models.ManyToManyField(Tag)
 	
 	def __str__(self):
-		return self.name
+		return self.firstName + " " + self.lastName
 		
 
 		
