@@ -41,7 +41,7 @@
             <a class="nav-link js-scroll-trigger" href="{% url 'login' %}">Log In</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="">About</a>
+            <a class="nav-link js-scroll-trigger" href="{% url 'signup' %}">Sign Up</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="">Contact</a>
@@ -57,7 +57,7 @@
       <div class="mx-auto text-center">
         <h1 class="mx-auto my-9 text-uppercase">Kollab</h1>
         <h2 class="text-white mx-auto mt-2 mb-5">Helping you to connect and collaborate with creatives around the world</h2>
-        <a href="login.html" class="btn btn-primary js-scroll-trigger">Get Started</a>
+        <a href="{% url 'login' %}" class="btn btn-primary js-scroll-trigger">Get Started</a>
       </div>
     </div>
   </header>

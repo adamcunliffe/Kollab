@@ -17,6 +17,7 @@ classes to be added:
 class Tag(models.Model):
 	# Might need to make each tage unique to ensure association between people via tags
 	
+	# definatly enforce uniqueness
 	name = models.CharField(max_length=128)
 	
 	def __str__(self):
@@ -28,6 +29,8 @@ class User(models.Model):
 	
 	# Users chosen location stored as latitude and longditude 
 	# floatfield is just a decimal number like 50.938892 or -14.324333
+	
+	# stop these from being in the constructor!!
 	lat = models.FloatField()
 	lon = models.FloatField()
 	
