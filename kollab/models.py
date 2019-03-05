@@ -23,6 +23,7 @@ class Tag(models.Model):
 		return self.name
 
 class User(models.Model):
+	# include a username / personalised name?
 
 	firstName = models.CharField(max_length=128)
 	lastName = models.CharField(max_length=128)
