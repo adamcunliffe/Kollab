@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 '''
 kollab/models.py
@@ -22,32 +23,36 @@ class Tag(models.Model):
 	def __str__(self):
 		return self.name
 
-class User(models.Model):
 
-	name = models.CharField(max_length=128)
-	
-	# Users chosen location stored as latitude and longditude 
+class UserProfile(models.Model):
+	user = models.OneToOneField(User)
+
+	# Users chosen location stored as latitude and longditude
 	# floatfield is just a decimal number like 50.938892 or -14.324333
 	lat = models.FloatField()
 	lon = models.FloatField()
-	
+
+	firstname = models.CharField(max_length=128)
+	lastname = models.CharField(max_length=128)
+
+	email = models.EmailField(max_length=256)
+
 	''' to be added:
 		portfolio --> one to one / one to many? --> portfolio class
 		firstname and secondname
 		search settings --> one to one --> search settings class
-		
+
 	'''
-	
+
 	# User has a many-to-many relationship with Tags becuase
-	# tags are shared between users, (eg, musician tag can belong to two 
+	# tags are shared between users, (eg, musician tag can belong to two
 	# users) and users can have several tags
 	tags = models.ManyToManyField(Tag)
-	
-	def __str__(self):
-		return self.name
-		
 
-		
+	def __str__(self):
+		return self.user.username
+
+
 class Project(models.Model):
 	name = models.CharField(max_length=128)
 	
@@ -65,6 +70,7 @@ class Project(models.Model):
 	
 	def __str__(self):
 		return self.name
+
 
 class Membership(models.Model):
 	# this sets a user as a member and ensures that if
