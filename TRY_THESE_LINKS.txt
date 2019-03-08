@@ -1,0 +1,9 @@
+http://localhost:8000/kollab/collaborators/
+http://localhost:8000/kollab/profile/ananya/
+http://localhost:8000/kollab/profile/ebo/
+http://localhost:8000/kollab/profile/dav/
+http://localhost:8000/kollab/profile/barak/
+http://localhost:8000/kollab/profile/faye/
+http://localhost:8000/kollab/profile/gerry/
+http://localhost:8000/kollab/profile/harry/
+http://localhost:8000/kollab/profile/charlie/
