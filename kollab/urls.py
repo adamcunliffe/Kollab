@@ -4,7 +4,7 @@ from kollab import views, apis
 urlpatterns = [
 	## for Views
 	url(r'^$', views.index, name='index'),
-	
-	## for processing REST api requests
-	url(r'^submitSignUp/$', apis.signup, name='submitSignUp')
+#	url(r'^kollab/', include('kollab.urls')),
+	url(r'^signup/$', views.signup, name='signup'),
+	url(r'^login/$', views.login, name='login')
 ]
