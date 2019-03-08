@@ -50,6 +50,7 @@ def profile(request, user_name_slug):
     context['secondName'] = ""
     context['location'] = "Exampleton"
     context['latlon'] = [userprof.lat, userprof.lon]
+    context['picture'] = userprof.picture
     context['selfinfo'] = userprof.selfinfo
     context['tags'] = userprof.tags.all()
     context['collaborations'] = Membership.objects.filter(userProfile = UserProfile.objects.get(slug=user_name_slug))
