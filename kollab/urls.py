@@ -8,5 +8,6 @@ urlpatterns = [
 	
 	url(r'^profile/(?P<user_name_slug>[\w\-]+)/$', views.profile, name='profile'),
 	url(r'^signup/$', views.signup, name='signup'),
-	url(r'^login/$', views.login, name='login')
+	url(r'^login/$', views.login, name='login'),
+	url(r'^collaborators/$', views.collaborators, name='collaborators')
 ]

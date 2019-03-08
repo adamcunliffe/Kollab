@@ -56,3 +56,6 @@ def profile(request, user_name_slug):
     context['collaborations'] = Membership.objects.filter(userProfile = UserProfile.objects.get(slug=user_name_slug))
     
     return render(request, 'kollab/profile.html', context)
+	
+def collaborators(request):
+    return render(request, 'kollab/collaborators.html')
