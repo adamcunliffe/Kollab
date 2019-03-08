@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from kollab import views, urls
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,4 +29,5 @@ urlpatterns = [
 	# with kollab are dealt with by the urls.py in 
 	# the kollab folder
 	url(r'^kollab/', include(urls)),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
