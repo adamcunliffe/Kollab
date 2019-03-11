@@ -715,29 +715,46 @@ background-size: cover;
 
       <div class = "row"></div>
 	  
-<nav class="navbar navbar-dark bg-dark">
-  <a class="text-light"><h2>Available Collaborators</h2></a>
-  <form method='post' action="{% url 'searchtags' %}" class="form-inline">
-  {% csrf_token %}
-    <input name="search_query" class="form-control mr-sm-2" type="search" placeholder="Guitar, Drama..." aria-label="Search">
-    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-  </form>
-  </nav>
-  {% if error_message %}
-  <div class = "col-lg">
-	<div style="font-weight: bold; color:orange;"> The following tags are not known to us: <i> {{ error_message }}</i>...
-	</div>
-   </div>
-   {% endif %}
+	<nav class="navbar navbar-dark bg-dark">
+	  <a class="text-light"><h2>Available Collaborators</h2></a>
+	  <form method='post' action="{% url 'searchtags' %}" class="form-inline">
+	  {% csrf_token %}
+		<div class ="row">
+			<div class ="col">
+				<input name="search_query" class="form-control mr-sm-2" type="search" placeholder="Guitar, Drama..." aria-label="Search">
+				<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+			</div>
+		</div>
+		<div class="form-group">
+    		<div class="col-sm-7 col-md-7">
+    			<div class="input-group">
+    				<div id="searchOption" class="btn-group">
+    					<a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Users">Users</a>
+    					<a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="Projects">Projects</a>
+    				</div>
+    				<input type="hidden" name="search_option" id="happy">
+    			</div>
+    		</div>
+    	</div>
+	  </form>
+	  </nav>
+	  {% if error_message %}
+	  <div class = "col-lg">
+		<div style="font-weight: bold; color:orange;"> The following tags are not known to us: <i> {{ error_message }}</i>...
+		</div>
+	   </div>
+	  {% endif %}
 
     </div>
 
 
   <div class="row">
+  
+  {% if type == "users" %}
   {% for user in results %}
-    <div class="col-lg-4 col-sm-6 mb-4">
+    <div class="col-lg-3 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="{% url 'profile' user_name_slug=user.slug %}"><img class="card-img-top" src="{% get_media_prefix %}{{ user.picture }}" alt="">
+        <a href="{% url 'profile' user_name_slug=user.slug %}"><img class="img-thumbnail" src="{% get_media_prefix %}{{ user.picture }}" alt="">
         <div class="card-body">
           <h4 class="card-title">
             <p>{{ user.user.username }}</p></a>
@@ -751,63 +768,26 @@ background-size: cover;
       </div>
     </div>
 {% endfor %}
+{% endif %}
+
+{% if type == 'projects' %}
+  {% for project in results %}
+    <div class="col-lg-3 col-sm-6 mb-4">
+      <div class="card h-100">
+        <a href="#"><img class="img-thumbnail" src="{% get_media_prefix %}{{ project.picture }}" alt="">
+        <div class="card-body">
+          <h4 class="card-title">
+            <p>{{ project.name }}</p></a>
+          </h4>
+          <p class="card-text"><!--- short here--->
+		  {{ project.short }}
+		  </p>
+        </div>
+      </div>
+    </div>
+{% endfor %}
+{% endif %}
 	
-    <!---div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="https://images.unsplash.com/photo-1499461953649-8c2645a4574e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Tommy Fleck</a>
-          </h4>
-          <p class="card-text">Rock Vocalist | Base Guitarist</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Jim Marston</a>
-          </h4>
-          <p class="card-text">Singer | Songwriter</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="https://images.unsplash.com/photo-1498677231914-50deb6ba4217?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Sara Norwood</a>
-          </h4>
-          <p class="card-text"> Java Programmer</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="https://images.unsplash.com/photo-1510848414191-8b5cb863e9c2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Darren Henderson</a>
-          </h4>
-          <p class="card-text">Visual Artist</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
-      <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="https://images.unsplash.com/photo-1517151692071-54b58b01b550?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1510&q=80" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Mo Sampson</a>
-          </h4>
-          <p class="card-text">Dancer</p>
-        </div>
-      </div>
-    </div>
-  </div --->
   <!-- /.row -->
 
   <!-- Pagination -->
@@ -828,39 +808,44 @@ background-size: cover;
 <script type="text/javascript">
 jQuery(function ($) {
 
-    $(".sidebar-dropdown > a").click(function() {
-  $(".sidebar-submenu").slideUp(200);
-  if (
-    $(this)
-      .parent()
-      .hasClass("active")
-  ) {
-    $(".sidebar-dropdown").removeClass("active");
-    $(this)
-      .parent()
-      .removeClass("active");
-  } else {
-    $(".sidebar-dropdown").removeClass("active");
-    $(this)
-      .next(".sidebar-submenu")
-      .slideDown(200);
-    $(this)
-      .parent()
-      .addClass("active");
-  }
+		$(".sidebar-dropdown > a").click(function() {
+	  $(".sidebar-submenu").slideUp(200);
+	  if (
+		$(this)
+		  .parent()
+		  .hasClass("active")
+	  ) {
+		$(".sidebar-dropdown").removeClass("active");
+		$(this)
+		  .parent()
+		  .removeClass("active");
+	  } else {
+		$(".sidebar-dropdown").removeClass("active");
+		$(this)
+		  .next(".sidebar-submenu")
+		  .slideDown(200);
+		$(this)
+		  .parent()
+		  .addClass("active");
+	  }
+	});
+
+	$("#close-sidebar").click(function() {
+	  $(".page-wrapper").removeClass("toggled");
+	});
+	$("#show-sidebar").click(function() {
+	  $(".page-wrapper").addClass("toggled");
+	});
 });
 
-$("#close-sidebar").click(function() {
-  $(".page-wrapper").removeClass("toggled");
-});
-$("#show-sidebar").click(function() {
-  $(".page-wrapper").addClass("toggled");
-});
-
-
-   
-
-});
+$('#searchOption a').on('click', function(){
+    var sel = $(this).data('title');
+    var tog = $(this).data('toggle');
+    $('#'+tog).prop('value', sel);
+    
+    $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
+    $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
+})
 </script>
 </html>
 </body>

@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 ##from kollab.forms import SignUpForm
-from kollab.models import Tag, UserProfile, Membership
+from kollab.models import Tag, UserProfile, Membership, Project
 from django.core.exceptions import ObjectDoesNotExist
 import re
 
@@ -66,11 +66,22 @@ def searchtags(request):
     context = {}
     if request.method == 'POST':
         raw_query = request.POST.get('search_query', None)
+        search_option = request.POST.get('search_option', None)
         search_query = clean(raw_query.lower())
-        print(search_query)
         query_tags, context['error_message'] = removeUseless(search_query)
+        
+        if search_option != "Projects":
+            context['results'] = get_user_results(query_tags)
+            context['type'] = 'users'
+        else:
+            context['results'] = get_project_results(query_tags)
+            context['type'] = 'projects'
+        
+        
+        print(search_query)
+        
         print(query_tags, context['error_message'])
-        context['results'] = get_user_results(query_tags)
+        
         
         return render(request, 'kollab/collaborators.html', context)
     else:
@@ -99,6 +110,16 @@ def get_user_results(query_tags):
     for i in range(0, len(query_tags)):
         if 'Not Valid' not in query_tags[i]:
             query = UserProfile.objects.filter(tags__name__contains=query_tags[i])
+            results = results | query
+            
+    print(results.distinct())
+    return results.distinct();
+    
+def get_project_results(query_tags):
+    results = Project.objects.none()
+    for i in range(0, len(query_tags)):
+        if 'Not Valid' not in query_tags[i]:
+            query = Project.objects.filter(tags__name__contains=query_tags[i])
             results = results | query
             
     print(results.distinct())
