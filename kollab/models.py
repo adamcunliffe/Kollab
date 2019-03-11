@@ -90,6 +90,13 @@ class Project(models.Model):
     # members is a list of Users
     members = models.ManyToManyField(UserProfile, through='Membership')
     
+    slug = models.SlugField(blank=True, null=True)
+    
+    # apparently what it takes to save a slug
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Project, self).save(*args, **kwargs)
+    
     def __str__(self):
         return self.name
 

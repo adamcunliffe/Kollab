@@ -58,6 +58,21 @@ def profile(request, user_name_slug):
     
     return render(request, 'kollab/profile.html', context)
     
+def project(request, project_name_slug):
+    context = {}
+    try:
+       projprof = Project.objects.get(slug=project_name_slug)
+    except ObjectDoesNotExist:
+       return HttpResponse("Does not exist...temp error page")
+    
+    context['name'] = projprof.name
+    context['short'] = projprof.short
+    context['long'] = projprof.long
+    context['picture'] = projprof.picture
+    context['members'] = projprof.members
+      
+    return render(request, 'kollab/project.html', context)
+    
 def collaborators(request):
     return render(request, 'kollab/collaborators.html')
     
