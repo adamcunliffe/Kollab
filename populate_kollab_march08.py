@@ -193,11 +193,11 @@ def populate():
 				index = tag % len(members)
 				print(tags[tag])
 				print(members[index])
-				members[index].tags.add(Tag.objects.get(name = tags[tag]))
+				members[index].tags.add(Tag.objects.filter(name = tags[tag]).first())
 		else:
 			for mem in range(0, len(members)):
 				index = mem % len(tags)
-				members[mem].tags.add(Tag.objects.get(name = tags[index]))
+				members[mem].tags.add(Tag.objects.filter(name = tags[index]).first())
 				
 				
 # functions for adding to database

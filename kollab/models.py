@@ -20,7 +20,12 @@ classes to be added:
 class Tag(models.Model):
     # Might need to make each tage unique to ensure association between people via tags
     
+    # CHANGE so that enforces lower case letters
     name = models.CharField(max_length=128)
+    
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower()
+        return super(Tag, self).save(*args, **kwargs)
     
     def __str__(self):
         return self.name

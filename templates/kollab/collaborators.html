@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
+
 <head>
     <meta charset="utf-8">
     <title>Kollab - Collaborators</title>
@@ -712,29 +714,45 @@ background-size: cover;
     <div class="container-fluid">
 
       <div class = "row"></div>
+	  
 <nav class="navbar navbar-dark bg-dark">
   <a class="text-light"><h2>Available Collaborators</h2></a>
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Name..." aria-label="Search">
+  <form method='post' action="{% url 'searchtags' %}" class="form-inline">
+  {% csrf_token %}
+    <input name="search_query" class="form-control mr-sm-2" type="search" placeholder="Guitar, Drama..." aria-label="Search">
     <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
   </form>
-</nav>
+  </nav>
+  {% if error_message %}
+  <div class = "col-lg">
+	<div style="font-weight: bold; color:orange;"> The following tags are not known to us: <i> {{ error_message }}</i>...
+	</div>
+   </div>
+   {% endif %}
+
     </div>
 
 
   <div class="row">
+  {% for user in results %}
     <div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="https://images.unsplash.com/photo-1485359466996-ba9d9b4958b9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt=""></a>
+        <a href="{% url 'profile' user_name_slug=user.slug %}"><img class="card-img-top" src="{% get_media_prefix %}{{ user.picture }}" alt="">
         <div class="card-body">
           <h4 class="card-title">
-            <a href="#">Miranda Johnson</a>
+            <p>{{ user.user.username }}</p></a>
           </h4>
-          <p class="card-text">Filmmaker | Poet</p>
+          <p style="text-transform: uppercase" class="card-text"><!--- Tags here--->
+		  {% for tag in user.tags.all %}
+		    {{ tag.name }}&nbsp;&nbsp;
+		  {% endfor %}		  
+		  </p>
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-sm-6 mb-4">
+{% endfor %}
+	
+    <!---div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
         <a href="#"><img class="card-img-top" src="https://images.unsplash.com/photo-1499461953649-8c2645a4574e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt=""></a>
         <div class="card-body">
@@ -789,7 +807,7 @@ background-size: cover;
         </div>
       </div>
     </div>
-  </div>
+  </div --->
   <!-- /.row -->
 
   <!-- Pagination -->
