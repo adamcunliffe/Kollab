@@ -59,3 +59,9 @@ def profile(request, user_name_slug):
 	
 def collaborators(request):
     return render(request, 'kollab/collaborators.html')
+	
+	'''
+def searchtags(request, search_query):
+	context = {}
+	context[matches] = Tags.objects.filter(name=
+'''
