@@ -769,7 +769,7 @@ background-size: cover;
         <a href="#"><img class="card-img-top" src="{% get_media_prefix %}{{ kollab.project.picture }}" alt=""></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="#">{{ kollab.project }}</a>
+            <a href="{% url 'project' project_name_slug=kollab.project.slug %}">{{ kollab.project }}</a>
           </h4>
           <p class="card-text">{{ kollab.project.short }}</p>
         </div>

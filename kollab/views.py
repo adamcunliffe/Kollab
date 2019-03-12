@@ -70,6 +70,13 @@ def project(request, project_name_slug):
     context['long'] = projprof.long
     context['picture'] = projprof.picture
     context['members'] = projprof.members
+    
+    tags = projprof.tags.all()
+    tagset = set()
+    for t in tags.all():
+        tagset.add(t.name)
+        
+    context['tags'] = tagset
       
     return render(request, 'kollab/project.html', context)
     
@@ -103,6 +110,27 @@ def searchtags(request):
         print('not a post!')
         context['error_message'] = "Sorry, but the system has failed to search"
     return render(request, 'kollab/collaborators.html', context)
+    
+def embedded_search(request, tag_slug, search_type):
+    context = {}
+    
+    query_tags = []
+    
+    query_tags.append(tag_slug.lower())
+    
+    if search_type != "project":
+        context['results'] = get_user_results(query_tags)
+        context['type'] = 'users'
+    else:
+        context['results'] = get_project_results(query_tags)
+        context['type'] = 'projects'
+    
+        
+    print(query_tags, context['results'])
+    
+    
+    return render(request, 'kollab/collaborators.html', context)
+  
 
 # remove everything that is not a letter or regular space, return array
 def clean(raw_query):

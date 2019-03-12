@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
+
 <head>
     <meta charset="utf-8">
     <title>Kollab - Projects</title>
@@ -678,24 +680,36 @@ background-size: cover;
       <div class = "row"></div>
 <nav class="navbar navbar-dark bg-dark">
   <a class="text-light"><h2>{{ name }}</h2></a>
-
     <a class="btn btn-primary" href="#" role="button">Edit Project</a>
-
-
+</nav>
+<nav class="navbar navbar-dark bg-dark">
+  <a class="text-light"><h6>{{ short }}</h6></a>
 </nav>
     </div>
 
-    <div class="container">
+<div class="container">
+ <div class = "jumbotron">
+	<div class = "row">
+	<div class="col-sm-6">
+	<img class="card-img-top" src="{% get_media_prefix %}{{ picture }}" alt="">
+	</div>
+	<div class="col-sm-6">
+	{{ long }}
+	</div>
+	</div>
+	</div>
+ </div>
+  
+ 
+  
   <div class="row">
     <div class="col-sm">
-
-
       <b>Current Members:</b>
-{% for member in members.all %}
-      <h6>
-            <a href="#">{{member.name}}</a>
+		{% for member in members.all %}
+		 <h6>
+            <a href="{% url 'profile' user_name_slug=member.slug %}">{{member}}</a>
          </h6>
-{% endfor %}
+		{% endfor %}
 
     </div>
     <div class="col-sm">
@@ -713,16 +727,11 @@ background-size: cover;
     <div class="col-sm">
 
       <b>Project Tags:</b>
-
-         <h6>
-           <a href="#">Band</a>,
-           <a href="#">Music</a>,
-           <a href="#">Glasgow</a>,
-           <a href="#">Guitar</a>,
-           <a href="#">Drums</a>,
-           <a href="#">Singer</a>,
-           <a href="#">Keyboardist</a>
-          </h6>
+	  <h6>
+	   {% for tag in tags %}         
+           <a href="{% url 'embedded_search' tag_slug=tag search_type='project' %}">{{ tag }}</a>,
+        {% endfor %}
+       </h6>
     </div>
 
        <div class="col-sm">

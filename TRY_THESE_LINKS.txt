@@ -7,3 +7,5 @@ http://localhost:8000/kollab/profile/faye/
 http://localhost:8000/kollab/profile/gerry/
 http://localhost:8000/kollab/profile/harry/
 http://localhost:8000/kollab/profile/charlie/
+
+http://localhost:8000/kollab/project/weegie-funk-legends/
