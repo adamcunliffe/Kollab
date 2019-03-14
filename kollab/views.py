@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -7,6 +7,9 @@ from django.shortcuts import render, redirect
 from kollab.forms import UserForm, UserProfileForm
 from kollab.models import Tag, UserProfile, Membership, Project
 from django.core.exceptions import ObjectDoesNotExist
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.core.validators import validate_email
 import re
 
 
@@ -16,8 +19,35 @@ def index(request):
 
 def login(request):
     context = {}
-    context['click'] = "false"
+    context['click'] = "=false"
     return render(request, 'kollab/login.html', context)
+    
+def login_authenticate(request):
+    context = {}
+    if request.method == 'POST':
+       email = request.POST.get('email', None)
+       password = request.POST.get('password', None)
+       
+       try:
+           user = User.objects.get(email=email)
+       except ObjectDoesNotExist:
+           context['loginerror'] = "=true"
+           return render(request, 'kollab/login.html', context)
+           print('error!')
+           
+       logged_user = authenticate(username=user.username, password=user.password)
+       print(email + "  " + password) 
+       
+       if logged_user is not None:
+           login(request, logged_user)
+           print('got to login')
+           # temporary redirect to build profile, should probibly be collabprate / logged_user profile
+           return HttpResponseRedirect(reverse('buildprofile'))
+       else:
+           context['loginerror'] = "=true"
+       print('login failed')
+       return render(request, 'kollab/login.html', context)
+        
 
 def firststep(request):
     context = {}
@@ -26,12 +56,6 @@ def firststep(request):
         email = request.POST.get('user-email', None)
         password1 = request.POST.get('user-pass', None)
         password2 = request.POST.get('user-repeatpass', None)
-# need a check here, possibly javascript, to see whether passwords match
-
-        # if username == '' or password == '':
-        #     return render('login.html', {'form_error': 'The passwords do not match'})
-        
-        # check for duplicates!
         
         isValid = True;
         error = []
@@ -46,7 +70,11 @@ def firststep(request):
         if password1 != password2:
             error.append( "Passwords were not identical.")
             isValid = False
-                
+            
+        user = authenticate(request, username=username, password=password1)
+        if user is not None:
+            login(request, user)
+        
         if isValid:
             user = User.objects.create_user(username=username, password=password1, email=email)
             user.save()
@@ -54,9 +82,10 @@ def firststep(request):
             context['error'] = error
             context['click'] = "true"
             return render(request, 'kollab/login.html', context)
-            
+        
+
     
-        return HttpRequest("Valid registration!") #render(request, 'kollab/login.html')
+        return HttpResponseRedirect(reverse('buildprofile'))
 
 
 def secondstep(request):
@@ -64,6 +93,10 @@ def secondstep(request):
     if request.method == 'POST':
         firstName = request['firstName']
         lastName = request['lastName']
+
+#@login_required        
+def buildprofile(request):
+    return render(request, 'kollab/buildprofile.html') #HttpResponse("yo") #
 
 # def step2():
 #     if post

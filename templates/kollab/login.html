@@ -139,32 +139,64 @@
 <body background="{% static "images/signupbackground.jpg" %}">
 
     <div id="logreg-forms">
-        <form class="form-signin">
+        <form class="form-signin" action="{% url 'login_authenticate' %}" method="post">
+		{% csrf_token %}
             <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
             <div class="social-login">
                 <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span> </button>
                 <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span> </button>
             </div>
             <p style="text-align:center"> OR  </p>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+			<input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
+            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
             
             <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
-            <a href="#" id="forgot_pswd">Forgot password?</a>
+            <!--a href="#" id="forgot_pswd">Forgot password?</a-->
             <hr>
             <!-- <p>Don't have an account!</p>  -->
             <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Sign up New Account</button>
             </form>
-
-            {% if form_error %}
-            {{ form_error }}
-            {% endif %}
-
+			
             <form action="/reset/password/" class="form-reset">
                 <input type="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
                 <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
                 <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Back</a>
             </form>
+			
+			<!--- Popup with Log In errors --->
+				<!-- Central Modal Medium Info -->
+					<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+					  aria-hidden="true">
+					  <div class="modal-dialog modal-notify modal-info" role="document">
+						<!--Content-->
+						<div class="modal-content">
+						  <!--Header-->
+						  <div class="modal-header">
+							<p class="heading lead">Login In Error</p>
+
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true" class="white-text">&times;</span>
+							</button>
+						  </div>
+
+						  <!--Body-->
+						  <div class="modal-body">
+							<div class="text-center">
+							  <i class=""></i>
+							  <p><i>Login Unsuccssful</i></p>
+							</div>
+						  </div>
+
+						  <!--Footer
+						  <div class="modal-footer justify-content-center">
+							<a type="button" class="btn btn-primary">Get it now <i class="far fa-gem ml-1 text-white"></i></a>
+							<a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">No, thanks</a>
+						  </div>
+						</div>
+						<!--/.Content-->
+					  </div>
+					</div>
+					<!-- Central Modal Medium Info-->	
             <!-- -------- SIGNUP FORM ------------ -->
             <form action="/firststep/" method="POST" class="form-signup">
 			{% csrf_token %}
@@ -186,7 +218,7 @@
                 <a href="#" id="cancel_signup"><i class="fas fa-angle-left"></i> Back</a>
             </form>
 			
-			<!--- Popup with errors --->
+			<!--- Popup with Sign up errors --->
 				<!-- Central Modal Medium Info -->
 					<div class="modal fade" id="centralModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 					  aria-hidden="true">
@@ -276,13 +308,22 @@ $(()=>{
     $('#logreg-forms #cancel_signup').click(toggleSignUp);
 })
 
-var click = {{ click }}
+var sign_error {{ click }}
 
-if(click == true){
+
+if(sign_error == true){
 	document.addEventListener("DOMContentLoaded", function(event) { 
 		document.getElementById("btn-signup").click(); 
 		$("#centralModalInfo").modal('show'); 
 		//window.location.assign("#centralModalInfo");		
+	 });
+}
+
+var login_error {{ loginerror }}
+
+if(login_error == true){
+	document.addEventListener("DOMContentLoaded", function(event) { 
+		$("#login-modal").modal('show'); 
 	 });
 }
 </script>
