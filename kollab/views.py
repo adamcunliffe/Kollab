@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-##from kollab.forms import SignUpForm
+from kollab.forms import UserForm, UserProfileForm
 from kollab.models import Tag, UserProfile, Membership, Project
 from django.core.exceptions import ObjectDoesNotExist
 import re
@@ -16,25 +16,76 @@ def index(request):
 def login(request):
     return render(request, 'kollab/login.html')
 
+def firststep(request):
 
-def signup(request):
-    return render(request, 'kollab/signup.html')
-
-
-def signup(request):
     if request.method == 'POST':
-        form = signup(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password')
-            email = form.cleaned_data.get('email')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = SignUpForm()
-    return render(request, 'kollab/signup.html', {'form': form})
+        username = request['username']
+        email = request['user-email']
+        password1 = request['user-pass']
+        password2 = request['user-repeatpass']
+# need a check here, possibly javascript, to see whether passwords match
+
+        # if username == '' or password == '':
+        #     return render('login.html', {'form_error': 'The passwords do not match'})
+
+        user = User(username=username, password=password1, email=email)
+        user.save()
+
+        return render(request, 'kollab/login,html')
+
+
+def secondstep(request):
+
+    if request.method == 'POST':
+        firstName = request['firstName']
+        lastName = request['lastName']
+
+# def step2():
+#     if post
+#         profile = UserProfile()
+#         profile.user = logged in
+
+
+# def signup(request):
+#     registered = False
+#
+#     if request.method == 'POST':
+#         user_form = UserForm(data=request.POST)
+#         profile_form = UserProfileForm(data=request.POST)
+#
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user = user_form.save()
+#
+#             user.set_password(user.password)
+#             user.save()
+#
+#             profile1 = profile_form.save(commit=False)
+#             profile1.user = user
+#
+#             if 'picture' in request.FILES:
+#                 profile.picture = request.FILES['picture']
+#
+#             profile1.save()
+#
+#             registered = True
+#
+#         else:
+#             print(user_form.errors, profile_form.errors)
+#
+#     else:
+#         user_form = UserForm()
+#         profile_form = UserProfileForm()
+#
+#             # username = form.cleaned_data.get('username')
+#             # raw_password = form.cleaned_data.get('password')
+#             # email = form.cleaned_data.get('email')
+#             # user = authenticate(username=username, password=raw_password)
+#             # login(request, user)
+#             # return redirect('home')
+#
+#     return render(request, 'kollab/signup.html', {'user_form': user_form,
+#                                                   'profile_form': profile_form,
+#                                                   'registered': registered})
     
     
 def profile(request, user_name_slug):

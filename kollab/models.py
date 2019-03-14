@@ -42,7 +42,7 @@ class UserProfile(models.Model):
 
     firstname = models.CharField(max_length=128,blank=True, null=True)
     lastname = models.CharField(max_length=128,blank=True, null=True)
-    email = models.EmailField(max_length=256,blank=True, null=True)
+  #  email = models.EmailField(max_length=256,blank=True, null=True)
     
     picture = models.ImageField(upload_to='profile_images', blank=True)
     
