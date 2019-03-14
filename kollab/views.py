@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from kollab.forms import UserForm, UserProfileForm
@@ -14,24 +15,48 @@ def index(request):
 
 
 def login(request):
-    return render(request, 'kollab/login.html')
+    context = {}
+    context['click'] = "false"
+    return render(request, 'kollab/login.html', context)
 
 def firststep(request):
-
+    context = {}
     if request.method == 'POST':
-        username = request['username']
-        email = request['user-email']
-        password1 = request['user-pass']
-        password2 = request['user-repeatpass']
+        username = request.POST.get('username', None)
+        email = request.POST.get('user-email', None)
+        password1 = request.POST.get('user-pass', None)
+        password2 = request.POST.get('user-repeatpass', None)
 # need a check here, possibly javascript, to see whether passwords match
 
         # if username == '' or password == '':
         #     return render('login.html', {'form_error': 'The passwords do not match'})
-
-        user = User(username=username, password=password1, email=email)
-        user.save()
-
-        return render(request, 'kollab/login,html')
+        
+        # check for duplicates!
+        
+        isValid = True;
+        error = []
+        if User.objects.filter(username=username).exists():
+            error.append("Username <strong>" + username + "</strong> already exists.")
+            isValid = False
+            
+        if User.objects.filter(email=email).exists():
+            error.append("Email <strong>" + email + "</strong> already exists.")
+            isValid = False
+            
+        if password1 != password2:
+            error.append( "Passwords were not identical.")
+            isValid = False
+                
+        if isValid:
+            user = User.objects.create_user(username=username, password=password1, email=email)
+            user.save()
+        if not isValid: 
+            context['error'] = error
+            context['click'] = "true"
+            return render(request, 'kollab/login.html', context)
+            
+    
+        return HttpRequest("Valid registration!") #render(request, 'kollab/login.html')
 
 
 def secondstep(request):
