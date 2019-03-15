@@ -9,9 +9,13 @@ you can only sign in with profiles you have made from the front end!
 
 Signing in with a user profile should lead to: http://localhost:8000/kollab/profile/<user_name_slug>/
 
-B) Otherwise, click Sign Up New Account to register a new account. Upun registering, you should be taken
-to http://localhost:8000/kollab/buildprofile/, which is currently only accessable when logged in. Enter whatever data you
-want and then you will be signed in and directed to http://localhost:8000/kollab/profile/<user_name_slug>/
+If errors are made then a popup should notify that it was not successful
+
+B) Otherwise, click Sign Up New Account to register a new account. If errors are made then a popup should notify that it was not successful
+
+Upun registering, you should be takento http://localhost:8000/kollab/buildprofile/, which is currently only accessable when 
+logged in. Enter whatever data youwant and then you will be signed in and directed to 
+http://localhost:8000/kollab/profile/<user_name_slug>/
 
 4) When finished visit http://localhost:8000/kollab/logoff/ to log off and it returns to the main page
 
