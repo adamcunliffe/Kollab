@@ -95,9 +95,48 @@ def secondstep(request):
         firstName = request['firstName']
         lastName = request['lastName']
 
-#@login_required        
+@login_required        
 def buildprofile(request):
-    return render(request, 'kollab/buildprofile.html') #HttpResponse("yo") #
+    return render(request, 'kollab/buildprofile.html')
+
+@login_required
+def buildprofile_data(request):
+    if request.method == 'POST':
+        tags = request.POST.getlist('tags', '')
+        print(tags)
+        
+        pic = request.POST.get('profile-pic','')
+        print(pic)
+        
+        loc_user = request.user #User.objects.get(username="test5")
+        
+        prof, created = UserProfile.objects.get_or_create(user=loc_user)        
+        prof.picture = request.FILES.get('profile-pic', '')
+        prof.selfinfo = request.POST.get('selfinfo','')
+        prof.firstname = request.POST.get('firstName','')
+        prof.lastname = request.POST.get('lastName','')
+            
+        prof.save()
+        
+        # reset tags
+        prof.tags.clear()
+        
+        for i in range(0, len(tags)):
+            if Tag.objects.filter(name=tags[i].lower()).exists():
+                tag = Tag.objects.filter(name=tags[i].lower()).first()
+                print(tag)
+            else:
+                tag = Tag.objects.create(name=tags[i])
+                print(tag)
+            tag.save()
+            
+            prof.tags.add(tag)
+        
+        prof.save()
+        return HttpResponseRedirect(reverse('profile', kwargs={'user_name_slug': prof.slug}))
+    
+    return HttpResponse("big ass error")
+    
 
 # def step2():
 #     if post

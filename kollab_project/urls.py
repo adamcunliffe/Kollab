@@ -21,13 +21,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-	url(r'^$', views.index, name='index'),
-	url(r'^login/', views.login, name='login'),
-	url(r'^firststep/', views.firststep, name='firststep'),
-	
-	# the below ensures that all urls that start 
-	# with kollab are dealt with by the urls.py in 
-	# the kollab folder
-	url(r'^kollab/', include(urls)),
+    url(r'^$', views.index, name='index'),
+    url(r'^login/$', views.login_page, name='login_page'),
+    url(r'^firststep/', views.firststep, name='firststep'),
+    
+    # the below ensures that all urls that start 
+    # with kollab are dealt with by the urls.py in 
+    # the kollab folder
+    url(r'^kollab/', include(urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
