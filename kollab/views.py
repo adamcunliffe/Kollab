@@ -17,7 +17,7 @@ def index(request):
     return render(request, 'kollab/index.html')
 
 
-def login(request):
+def login_page(request):
     context = {}
     context['click'] = "=false"
     return render(request, 'kollab/login.html', context)
@@ -35,7 +35,7 @@ def login_authenticate(request):
            return render(request, 'kollab/login.html', context)
            print('error!')
            
-       logged_user = authenticate(username=user.username, password=user.password)
+       logged_user = authenticate(username=user.username, password=password)
        print(email + "  " + password) 
        
        if logged_user is not None:
@@ -78,9 +78,10 @@ def firststep(request):
         if isValid:
             user = User.objects.create_user(username=username, password=password1, email=email)
             user.save()
+
         if not isValid: 
             context['error'] = error
-            context['click'] = "true"
+            context['click'] = "=true"
             return render(request, 'kollab/login.html', context)
         
 
