@@ -725,7 +725,7 @@ background-size: cover;
 				<img src="{% get_media_prefix %}{{ picture }}" class="img-thumbnail rounded-circle">
 			</div>
 				<div class="col-lg-">
-				<h4 class="text-light"><strong>{{ firstName }} {{ secondName }}</strong></h4>    
+				<h4 class="text-light"><strong>{% if firstname != "" %} {{ firstname }} {{ lastname }} {% else %} {{ username }} {% endif %}</strong></h4>    
 				<div>
 				{%for tag in tags %}
 				  <a class="text-light" style="text-transform: uppercase">{{ tag.name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
