@@ -183,7 +183,7 @@
 						  <div class="modal-body">
 							<div class="text-center">
 							  <i class=""></i>
-							  <p><i>Login Unsuccssful</i></p>
+							  <p><i>Login Unsuccessful</i></p>
 							</div>
 						  </div>
 
@@ -197,7 +197,7 @@
 					</div>
 					<!-- Central Modal Medium Info-->	
             <!-- -------- SIGNUP FORM ------------ -->
-            <form action="/firststep/" method="POST" class="form-signup">
+            <form action="{% url 'login_register' %}" method="POST" class="form-signup">
 			{% csrf_token %}
                 <div class="social-login">
                     <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign up with Facebook</span> </button>

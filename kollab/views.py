@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
@@ -40,16 +40,17 @@ def login_authenticate(request):
        
        if logged_user is not None:
            login(request, logged_user)
-           print('got to login')
+           print('got to login')           
+           prof = UserProfile.objects.get(user=logged_user)
            # temporary redirect to build profile, should probibly be collabprate / logged_user profile
-           return HttpResponseRedirect(reverse('buildprofile'))
+           return HttpResponseRedirect(reverse('profile', kwargs={'user_name_slug': prof.slug}))
        else:
            context['loginerror'] = "=true"
        print('login failed')
        return render(request, 'kollab/login.html', context)
         
 
-def firststep(request):
+def login_register(request):
     context = {}
     if request.method == 'POST':
         username = request.POST.get('username', None)
@@ -71,22 +72,26 @@ def firststep(request):
             error.append( "Passwords were not identical.")
             isValid = False
             
-        user = authenticate(request, username=username, password=password1)
-        if user is not None:
-            login(request, user)
+        
         
         if isValid:
             user = User.objects.create_user(username=username, password=password1, email=email)
             user.save()
+            user = authenticate(request, username=username, password=password1)
+            print("user: "+ user.username)
+            if user is not None:
+                login(request, user)
+            return HttpResponseRedirect(reverse('buildprofile'))
 
         if not isValid: 
             context['error'] = error
             context['click'] = "=true"
             return render(request, 'kollab/login.html', context)
         
-
-    
-        return HttpResponseRedirect(reverse('buildprofile'))
+        
+def logoff(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
 
 
 def secondstep(request):
