@@ -73,9 +73,19 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Collabs(models.Model):
+    SENT = 'SENT'
+    CONFIRMED = 'CONF'
+    DENIED = 'DEN'
+    STATUS_CHOICES = (
+        ('SENT', 'SENT'),
+        ('CONF', 'CONFIRMED'),
+        ('DEN', 'DENIED'),
+    )
     created = models.DateTimeField(auto_now_add=True, editable=False)
-    creator = models.ForeignKey(User, related_name="friendship_creator_set")
-    friend = models.ForeignKey(User, related_name="friend_set")
+    creator = models.ForeignKey(UserProfile, related_name="collabs_initiated")
+    friend = models.ForeignKey(UserProfile, related_name="collabs_recieved")
+    status = models.CharField(max_length=4, choices=STATUS_CHOICES)
+    
 
         
         
