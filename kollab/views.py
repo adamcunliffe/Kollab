@@ -201,8 +201,9 @@ def profile(request, user_name_slug):
     except ObjectDoesNotExist:
        return HttpResponse("Does not exist...temp error page")
     
-    context['firstName'] = userprof.user.username
-    context['secondName'] = ""
+    context['username'] = userprof.user.username
+    context['firstname'] = userprof.firstname
+    context['lastname'] = userprof.lastname
     context['location'] = "Exampleton"
     context['latlon'] = [userprof.lat, userprof.lon]
     context['picture'] = userprof.picture
