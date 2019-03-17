@@ -49,7 +49,7 @@ class UserProfile(models.Model):
     #Hometown, or city var
     
     selfinfo = models.TextField(blank=True, null=True)
-    
+        
     slug = models.SlugField(blank=True, null=True)
     
     # apparently what it takes to save a slug
@@ -72,7 +72,13 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Collabs(models.Model):
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    creator = models.ForeignKey(User, related_name="friendship_creator_set")
+    friend = models.ForeignKey(User, related_name="friend_set")
 
+        
+        
 class Project(models.Model):
     name = models.CharField(max_length=128)
     short = models.CharField(max_length=128, blank=True, null=True)

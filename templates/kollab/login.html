@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load staticfiles %}
+{% load kollab_template_tags %}
 
 <head>
     <meta charset="utf-8">
@@ -280,7 +281,7 @@ $(()=>{
     </p>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="/script.js"></script>
+    <script src="{% scripts %}/script.js"> var helloworld = true </script>
 	
 		<p class="text-center text-light"><strong><a href="index.html">Back</a></strong></p>
 		

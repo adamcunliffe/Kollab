@@ -290,7 +290,8 @@ def embedded_search(request, tag_slug, search_type):
 # remove everything that is not a letter or regular space, return array
 def clean(raw_query):
     return re.sub('[^a-zA-Z ]', "", raw_query).split(" ")
-   
+ 
+#helper functions for the search
 #remove tags that dont exist
 def removeUseless(search_query):
     error = ""
