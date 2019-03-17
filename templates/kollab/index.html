@@ -1,81 +1,265 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
 
+{% load static %}
 {% load staticfiles %}
 {% load kollab_template_tags %}
 
-<head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Kollab</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="favicon.ico">
 
-  <title>Kollab</title>
+        <!--Google Font link-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
 
-  <!-- Bootstrap core CSS -->
-  <link href= "{% static "bootstrap/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
 
-  <!-- Custom fonts for this template -->
-  <link href="{% static "bootstrap/vendor/fontawesome-free/css/all.min.css" %}" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <link rel="stylesheet" href="static/assets/css/slick.css">
+        <link rel="stylesheet" href="static/assets/css/slick-theme.css">
+        <link rel="stylesheet" href="static/assets/css/animate.css">
+        <link rel="stylesheet" href="static/assets/css/iconfont.css">
+        <link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="static/assets/css/bootstrap.css">
+        <link rel="stylesheet" href="static/assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="static/assets/css/bootsnav.css">
 
-  <!-- Custom styles for this template -->
-  <link href="{% static "bootstrap/css/grayscale.min.css" %}" rel="stylesheet">
 
-</head>
 
-<body id="page-top">
+        <!--For Plugins external css-->
+        <link rel="stylesheet" href="static/assets/css/plugins.css" />
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{% url 'login_page' %}">Log In or Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href=""></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+        <!--Theme custom css -->
+        <link rel="stylesheet" href="static/assets/css/style.css">
 
-  <!-- Header -->
-  <header class="masthead">
-    <div class="container d-flex h-100 align-items-center">
-      <div class="mx-auto text-center">
-        <h1 class="mx-auto my-9 text-uppercase">Kollab</h1>
-        <h2 class="text-white mx-auto mt-2 mb-5">Helping you to connect and collaborate with creatives around the world</h2>
-        <a href="{% url 'login_page' %}" class="btn btn-primary js-scroll-trigger">Get Started</a>
-      </div>
-    </div>
-  </header>
+        <!--Theme Responsive css-->
+        <link rel="stylesheet" href="static/assets/css/responsive.css" />
 
-  
-  
+        <script src="static/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
 
-  
-  <!-- Bootstrap core JavaScript -->
-  <script src= "{% static "bootstrap/vendor/jquery/jquery.min.js" %}" ></script>
-  <script src= "{% static "bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <body data-spy="scroll" data-target=".navbar-collapse" data-offset="100">
 
-  <!-- Plugin JavaScript -->
-  <script src="{% static "bootstrap/vendor/jquery-easing/jquery.easing.min.js" %}"></script>
 
-  <!-- Custom scripts for this template -->
-  <script src="{% static "bootstrap/js/grayscale.min.js" %}"></script>
+        <!-- Preloader -->
+        <div id="loading">
+            <div id="loading-center">
+                <div id="loading-center-absolute">
+                    <div class="object" id="object_one"></div>
+                    <div class="object" id="object_two"></div>
+                    <div class="object" id="object_three"></div>
+                    <div class="object" id="object_four"></div>
+                </div>
+            </div>
+        </div><!--End off Preloader -->
 
-</body>
 
+        <div class="culmn">
+            <!--Home page style-->
+
+
+            <nav class="navbar navbar-default bootsnav navbar-fixed no-background white">
+
+}
+
+
+                <div class="container"> 
+
+
+                    <!-- Start Header Navigation -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <a class="navbar-brand" href="#brand">
+                            <img src="static/assets/images/logo.png" class="logo" alt="">
+                        </a>
+
+                    </div>
+                    <!-- End Header Navigation -->
+
+                    <!-- navbar menu -->
+                    <div class="collapse navbar-collapse" id="navbar-menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#home">Home</a></li>                    
+                            <li><a href="#features">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div> 
+
+            </nav>
+
+            <!--Home Sections-->
+
+            <section id="home" class="home bg-black fix">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="main_home text-center">
+                            <div class="col-md-12">
+                                <div class="hello">
+                                    <div class="slid_item">
+                                        <div class="home_text ">
+                                            <img src="static/assets/images/logo2.png" alt="Logo">
+                                            <h3 class="text-white text-uppercase">Helping you to connect and collaborate with creatives around the world</h3>
+                                                    <a href="{% url 'login_page' %}" class="btn btn-primary js-scroll-trigger">Get Started</a>
+                                        </div>
+                                    </div><!-- End off slid item -->
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <a class="mouse-scroll" href="#about"> 
+                            <span class="mouse">
+                                <span class="mouse-movement"></span>
+                            </span>
+                            <span class="mouse-message fadeIn">Explore</span> <br />
+
+                        </a>
+
+                    </div><!--End off row-->
+                </div><!--End off container -->
+            </section> <!--End off Home Sections-->
+
+
+            <!--Featured Section-->
+            <section id="features" class="features bg-white">
+            </section><!-- End off Featured Section-->
+
+            <!--Choose section-->
+            <section id="choose" class="choose bg-grey roomy-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="main_choose">
+                            <div class="col-md-6">
+                                <div class="choose_mac">
+                                    <div class="choose_slide">
+                                        <div class="choose_item">
+                                            <img src="static/assets/images/choose-img1.jpg" alt="" />
+                                        </div>
+                                        <div class="choose_item">
+                                            <img src="static/assets/images/choose-img2.jpg" alt="" />
+                                        </div>
+                                        <div class="choose_item">
+                                            <img src="static/assets/images/choose-img3.jpg" alt="" />
+                                        </div>
+                                           <div class="choose_item">
+                                               <img src="static/assets/images/choose-img4.jpg" alt="" />
+                                           </div>
+                                    </div>
+                                </div>
+                            </div><!-- End off col-md-6 -->
+
+                            <div class="col-md-5 col-md-offset-1">
+                                <div class="choose_content sm-m-top-40">
+                                    <div class="head_title">
+                                        <h2 class="text-uppercase">Why <strong>Sign Up?</strong></h2>
+                                    </div>
+                                    <div class="choose_item_text fix">
+                                        <h6><i class="fa fa-check-square-o"></i> Find Collaborators</h6>
+                                        <p> Find like-minded creatives for all projects, from dancing to programming! </p>
+                                    </div>
+                                    <div class="choose_item_text fix m-top-20">
+                                        <h6><i class="fa fa-check-square-o"></i> Promote Your Projects</h6>
+                                        <p>Set up project pages and invite other collaborators! </p>
+                                    </div>
+                                    <div class="choose_item_text fix m-top-20">
+                                        <h6><i class="fa fa-check-square-o"></i> Chat And Share</h6>
+                                        <p>Discuss your ideas with collaborators - all within the app! </p>
+                                    </div>
+                                    <div class="choose_item_text fix m-top-20">
+                                        <h6><i class="fa fa-check-square-o"></i> Search Local Or Worldwide</h6>
+                                        <p>Whether you need collaborators on your doorstep or across the globe, Kollab can help! </p>
+                                    </div>
+                                </div>
+                            </div><!-- End off col-md-6 -->
+                        </div>
+                    </div><!-- End off row -->
+                </div><!-- End off container -->
+            </section><!-- End off choose section -->
+
+
+            <footer id="contact" class="footer action-lage bg-black p-top-80">
+                <!--<div class="action-lage"></div>-->
+                <div class="container">
+                    <div class="row">
+                        <div class="widget_area">
+                            <div class="col-md-3">
+                                <div class="widget_item widget_about">
+                                    <div class="widget_ab_item m-top-30">
+                                        <div class="item_icon"><i class="fa fa-location-arrow"></i></div>
+                                        <div class="widget_ab_item_text">
+                                            <h6 class="text-white">Location</h6>
+                                            <p>
+                                                Ashton Ln,
+                                                Glasgow, G12 8QR</p>
+                                        </div>
+                                    </div>
+                                    <div class="widget_ab_item m-top-30">
+                                        <div class="item_icon"><i class="fa fa-phone"></i></div>
+                                        <div class="widget_ab_item_text">
+                                            <h6 class="text-white">Phone :</h6>
+                                            <p>0141 330 5496</p>
+                                        </div>
+                                    </div>
+                                    <div class="widget_ab_item m-top-30">
+                                        <div class="item_icon"><i class="fa fa-envelope-o"></i></div>
+                                        <div class="widget_ab_item_text">
+                                            <h6 class="text-white">Email Address :</h6>
+                                            <p>contact@kollab.com</p>
+                                        </div>
+                                    </div>
+                                </div><!-- End off widget item -->
+                            </div><!-- End off col-md-3 -->
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="main_footer fix bg-mega text-center p-top-40 p-bottom-30 m-top-80">
+                    <div class="col-md-12">
+                    </div>
+                </div>
+            </footer>
+
+
+
+
+        </div>
+
+        <!-- JS includes -->
+
+        <script src="static/assets/js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="static/assets/js/vendor/bootstrap.min.js"></script>
+
+        <script src="static/assets/js/jquery.magnific-popup.js"></script>
+        <!--<script src="assets/js/jquery.easypiechart.min.js"></script>-->
+        <script src="static/assets/js/jquery.easing.1.3.js"></script>
+        <!--<script src="assets/js/slick.js"></script>-->
+        <script src="static/assets/js/slick.min.js"></script>
+        <script src="static/assets/js/js.isotope.js"></script>
+        <script src="static/assets/js/jquery.collapse.js"></script>
+        <script src="static/assets/js/bootsnav.js"></script>
+
+        <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+        <script src="static/assets/js/plugins.js"></script>
+        <script src="static/assets/js/main.js"></script>
+
+
+
+    </body>
 </html>
