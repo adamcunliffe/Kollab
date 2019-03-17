@@ -29,7 +29,7 @@ SECRET_KEY = 'o2wv#9(%xyrt_$spb7=su@eakx!7t!76z&q7oczrb2+uh7lcms'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bc9292.pythonanywhere.com']
+ALLOWED_HOSTS = ['bc9292.pythonanywhere.com', 'localhost']
 
 
 # Application definition
