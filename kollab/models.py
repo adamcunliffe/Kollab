@@ -85,6 +85,10 @@ class Collabs(models.Model):
     creator = models.ForeignKey(UserProfile, related_name="collabs_initiated")
     friend = models.ForeignKey(UserProfile, related_name="collabs_recieved")
     status = models.CharField(max_length=4, choices=STATUS_CHOICES)
+	
+	
+	def __str__(self):
+		return creator.user.username + " to " + friend.user.username + " status: " + status
     
 
         

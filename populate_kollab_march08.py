@@ -17,10 +17,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kollab_project.settings')
 import django
 django.setup()
 from django.contrib.auth.models import User
-from kollab.models import UserProfile, Tag, Project, Membership
+from kollab.models import UserProfile, Tag, Project, Membership, Collabs
 from django.core.files import File
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
+import random
 
 # Script which simulates typical data we need to save and retrieve
 
@@ -46,6 +47,9 @@ def populate():
         
     # website used to get lat lon: https://www.mapcoordinates.net/en
     # all lat lons refere to places around glasgow, starting from the centere & going out to dumbarton...dont know why I chose dumbarton...
+    
+    
+    
     users = [
         {"username" : "Ananya",
          "email": "Ananya@ex.com",
@@ -141,6 +145,27 @@ def populate():
         preset_memberships_1,
         preset_memberships_2,
         preset_memberships_3 ]
+        
+    preset_collabs_1 = [
+        users[0],
+        users[5],
+        users[2],
+        users[7] ]
+        
+    preset_collabs_2 = [
+        users[4],
+        users[7],
+        users[1]]
+        
+    preset_collabs_3 = [
+        users[6],
+        users[0],
+        users[1]]
+        
+    collabs = [
+        preset_collabs_1,
+        preset_collabs_2,
+        preset_collabs_3 ]
     
     # iterating through data to functions
     
@@ -200,6 +225,31 @@ def populate():
             for mem in range(0, len(members)):
                 index = mem % len(tags)
                 members[mem].tags.add(Tag.objects.filter(name = tags[index]).first())
+                
+    
+    # adds Collabs (friends) an randomly sets them to sent or confirmed setting for testing
+    for i in range(0, len(collabs)):
+        preset_collab = collabs[i]
+        collab_adder = preset_collab[0]
+        print("add collabs " + collab_adder['username'])
+        user = User.objects.get(username=collab_adder['username'])
+        adder_userprof = UserProfile.objects.get(user=user)
+        
+        #now go through the rest of the list and create an instance of Collabs for each initiated by the adder_userprof
+        for j in range(1, len(preset_collab)):
+            recipiant = preset_collab[j]
+            user = User.objects.get(username=recipiant['username'])
+            recip_userprof = UserProfile.objects.get(user=user)
+            
+            if random.randint(0,1) == 1:
+                state = Collabs.SENT
+            else:
+                state = Collabs.CONFIRMED
+            
+            col, created = Collabs.objects.get_or_create(creator=adder_userprof, friend=recip_userprof, status=state)
+            col.save()
+            
+            
                 
                 
 # functions for adding to database
