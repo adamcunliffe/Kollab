@@ -1,0 +1,3 @@
+Just a note to say that all front end scripts relating directly to bootstrap go in the bootstrap folder
+
+All front end scripts relating to our django project (eg, rest services) should be put in the scripts folder
