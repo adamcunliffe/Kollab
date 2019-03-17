@@ -717,15 +717,15 @@ background-size: cover;
 	<div class="container-fluid">
 	
 	  <div class="jumbotron bg-dark">
-	  <div class="container">
+	  <!--div class="container bg-dark"-->
 	  <!-- profile image and name -->
-	    <div class="row">
+	    <div class="row justify-content-between">
 			<div class="col-3">
 				<!---h4 class="text-light"><strong>My Name</strong></h4--->    
 				<img src="{% get_media_prefix %}{{ picture }}" class="img-thumbnail rounded-circle">
 			</div>
-				<div class="col-lg-">
-				<h4 class="text-light"><strong>{% if firstname != "" %} {{ firstname }} {{ lastname }} {% else %} {{ username }} {% endif %}</strong></h4>    
+			<div class="col-7">
+				<h4 class="text-light"><strong>{% if firstname != None %} {{ firstname }} {{ lastname }} {% else %} {{ username }} {% endif %}</strong></h4>    
 				<div>
 				{%for tag in tags %}
 				  <a class="text-light" style="text-transform: uppercase">{{ tag.name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -735,9 +735,16 @@ background-size: cover;
 				  <a class="text-light"> <i>{{ location }}</i></a>
 				  </div>
 			</div>
+			<div class="col-2 align-self-end"">
+			<!-- Insert conditon here if user is logged in--->
+				<div class='btn-group'>				  
+				  <button type="button" class="btn btn-primary btn-rounded">Edit Profile</button>
+				</div>
+			    
+			</div>
 		</div>
 		
-	  </div>
+	  <!--/div--->
 	</div>
 	
 	  <div class="container">
