@@ -297,6 +297,8 @@ def add_user(user, userProfile):
     newuser, created = User.objects.get_or_create(username=user['username'], email=user['email'], password=user['password'])
     newuser.save()
     profile, created = UserProfile.objects.get_or_create(user=newuser)
+    profile.firstname = user['username']
+    profile.lastname = "Test"+str(random.randint(1,100))
     profile.lat = userProfile['lat']
     profile.lon = userProfile['lon']
     profile.selfinfo = userProfile['selfinfo']

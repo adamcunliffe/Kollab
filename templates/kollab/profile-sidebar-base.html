@@ -1,5 +1,7 @@
 <!DOCTYPE html>
  <html> 
+ {% load kollab_template_tags %}
+ {% load static %}
  
  <head>
    <link rel="stylesheet" type = "text/css" href= "/static/css/profile-sidebar-style.css">
@@ -35,18 +37,18 @@
       </div>
       <div class="sidebar-header">
         <div class="user-pic">
-          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+          <img class="img-responsive img-rounded" src="{% get_media_prefix %}{{ current_user.picture }}"
             alt="User picture">
         </div>
         <div class="user-info">
-          <span class="user-name">John
-            <strong>Smith</strong>
+          <span class="user-name">{{ current_user.firstname }}
+            <strong>{{ current_user.lastname }}</strong>
           </span>
-          <span class="user-role">Singer | Songwriter</span>
+          <!--span class="user-role">Singer | Songwriter</span>
           <span class="user-status">
             <i class="fa fa-circle"></i>
             <span>Online</span>
-          </span>
+          </span-->
         </div>
       </div>
       <!-- sidebar-header  -->
@@ -67,19 +69,23 @@
 
 
         <ul>
+		
+		
           <li class="header-menu">
             <span>Your Collaborators</span>
           </li>
+		  {% for collabs in collabsconfirmed %}
+		  {% if collabs.creator.slug != current_user.slug %} <!--- if true then the collaborators profile is in the creator attribute, in friend attribute otherwise--->
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-user"></i>
-              <span>Bill Williamson</span>
+              <span>{{ collabs.creator.firstname }} {{ collabs.creator.lastname }}</span>
               <span class="badge badge-pill badge-warning">New</span>
             </a>
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="#">View Profile
+                  <a href="{% url 'profile' user_name_slug=collabs.creator.slug %}">View Profile
                   </a>
                 </li>
                 <li>
@@ -88,7 +94,28 @@
               </ul>
             </div>
           </li>
-          <li class="sidebar-dropdown">
+		  {% else %}
+		  <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-user"></i>
+              <span>{{ collabs.friend.firstname }} {{ collabs.friend.lastname }}</span>
+              <span class="badge badge-pill badge-warning">New</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="{% url 'profile' user_name_slug=collabs.friend.slug %}">View Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Chat</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+		  {% endif %}
+		  {% endfor %}
+          <!--li class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-user"></i>
               <span>Jim Marston</span>
@@ -138,7 +165,7 @@
                 </li>
               </ul>
             </div>
-          </li>
+          </li-->
               </ul>
       </div>
 

@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime
 import re
 
 
@@ -212,6 +213,11 @@ def profile(request, user_name_slug):
     
     current_user = UserProfile.objects.get(user=request.user)
     
+    #context['collabsconfirmed'] = current_user.collabs_initiated.filter(status=Collabs.CONFIRMED) | current_user.collabs_recieved.filter(status=Collabs.CONFIRMED)
+   # context['current_user'] = current_user
+   
+    context = get_user_sidebar_info(request)
+   
     context['currentuserslug'] = current_user.slug
     context['profileslug'] = user_name_slug
     context['username'] = userprof.user.username
@@ -367,14 +373,20 @@ def project(request, project_name_slug):
 
     
 def collaborators(request):
-    return render(request, 'kollab/collaborators.html')
+    context = get_user_sidebar_info(request)
+    return render(request, 'kollab/collaborators.html', context)
 
 def chat(request):
-    return render(request, 'kollab/chat.html')
+    context = get_user_sidebar_info(request)
+    return render(request, 'kollab/chat.html', context)
 
+@login_required
 def searchtags(request):
     context = {}
+    context = get_user_sidebar_info(request)
+	
     if request.method == 'POST':
+        
         raw_query = request.POST.get('search_query', None)
         search_option = request.POST.get('search_option', None)
         search_query = clean(raw_query.lower())
@@ -388,6 +400,7 @@ def searchtags(request):
             context['type'] = 'projects'
         
         
+        
         print(search_query)
         
         print(query_tags, context['error_message'])
@@ -398,10 +411,12 @@ def searchtags(request):
         print('not a post!')
         context['error_message'] = "Sorry, but the system has failed to search"
     return render(request, 'kollab/collaborators.html', context)
-    
+ 
+@login_required
 def embedded_search(request, tag_slug, search_type):
     context = {}
-    
+    context = get_user_sidebar_info(request)
+	
     query_tags = []
     
     query_tags.append(tag_slug.lower())
@@ -418,6 +433,15 @@ def embedded_search(request, tag_slug, search_type):
     
     
     return render(request, 'kollab/collaborators.html', context)
+    
+# Helper method to return sidebar information
+def get_user_sidebar_info(request):
+    context = {}
+    current_user = UserProfile.objects.get(user=request.user)
+    context['collabsconfirmed'] = current_user.collabs_initiated.filter(status=Collabs.CONFIRMED) | current_user.collabs_recieved.filter(status=Collabs.CONFIRMED)
+    context['current_user'] = current_user
+    
+    return context
   
 
 # remove everything that is not a letter or regular space, return array
