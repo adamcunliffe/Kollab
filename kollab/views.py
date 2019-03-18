@@ -190,7 +190,7 @@ def buildprofile_data(request):
 #                                                   'profile_form': profile_form,
 #                                                   'registered': registered})
     
-    
+@login_required
 def profile(request, user_name_slug):
     context = {}
     print(user_name_slug)
@@ -211,7 +211,21 @@ def profile(request, user_name_slug):
     context['tags'] = userprof.tags.all()
     context['collaborations'] = Membership.objects.filter(userProfile = UserProfile.objects.get(slug=user_name_slug))
     
+    current_user = UserProfile.objects.get(user=request.user)
+    
+    if current_user.slug == user_name_slug:
+        return personal_profile(request, context, current_user)
+    
     return render(request, 'kollab/profile.html', context)
+
+# Method that supports Views.profile to display to the current user
+@login_required    
+def personal_profile(request, context, current_user):
+    print('success')
+    context['collabs-sent'] = current_user.collabs_initiated.all()
+    context['collabs-recieved'] = current_user.collabs_recieved.all()
+    return render(request, 'kollab/profile-personal.html', context)
+
     
 def project(request, project_name_slug):
     context = {}

@@ -22,6 +22,7 @@ from django.core.files import File
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
 import random
+from django.contrib.auth.hashers import make_password
 
 # Script which simulates typical data we need to save and retrieve
 
@@ -50,7 +51,7 @@ def populate():
     
     
     
-    users = [
+    '''users = [
         {"username" : "Ananya",
          "email": "Ananya@ex.com",
          "password" : "predictable"},
@@ -74,7 +75,35 @@ def populate():
          "password" : "predictable"},
          {"username" : "Harry",
          "email": "Harry@ex.com",
-         "password" : "predictable"}]
+         "password" : "predictable"}]'''
+         
+    hashedPassword = make_password("predictable", salt=None, hasher='default')
+
+    users = [
+        {"username" : "Ananya",
+         "email": "Ananya@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Barak",
+         "email": "Barak@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Charlie",
+         "email": "Charlie@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Dav",
+         "email": "Dav@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Ebo",
+         "email": "Ebo@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Faye",
+         "email": "Faye@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Gerry",
+         "email": "Gerry@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Harry",
+         "email": "Harry@ex.com",
+         "password" : hashedPassword}]
          
     userProfiles =[
          {"selfinfo" : string,
