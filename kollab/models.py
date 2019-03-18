@@ -73,6 +73,18 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Collabs(models.Model):
+    '''Word of Warning :)
+       It is easy to duplicate the Collab relationships because two 'creator' profiles can add each other,
+       and it will provide two unique instances of a Collabs object. unfortunitly we only want one
+       
+       Its not beautiful, but in functions you can avoid doing this by checking that the recipient has
+       not already sent one to you by using the below condition:
+       
+       if not adder_userprof.collabs_recieved.filter(creator=recip_userprof).exists(): 
+       
+       in English: "if its not true that the creator has recieved a Collabs where the creator 
+       of THAT Collabs is the same user profile as the one we are sending to" '''
+
     SENT = 'SENT'
     CONFIRMED = 'CONF'
     DENIED = 'DEN'
@@ -85,10 +97,10 @@ class Collabs(models.Model):
     creator = models.ForeignKey(UserProfile, related_name="collabs_initiated")
     friend = models.ForeignKey(UserProfile, related_name="collabs_recieved")
     status = models.CharField(max_length=4, choices=STATUS_CHOICES)
-	
-	
-	def __str__(self):
-		return creator.user.username + " to " + friend.user.username + " status: " + status
+    
+    
+    def __str__(self):
+        return creator.user.username + " to " + friend.user.username + " status: " + status
     
 
         

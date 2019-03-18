@@ -241,14 +241,16 @@ def populate():
             user = User.objects.get(username=recipiant['username'])
             recip_userprof = UserProfile.objects.get(user=user)
             
-            if random.randint(0,1) == 1:
-                state = Collabs.SENT
+            if not adder_userprof.collabs_recieved.filter(creator=recip_userprof).exists():      
+                if random.randint(0,1) == 1:
+                    state = Collabs.SENT
+                else:
+                    state = Collabs.CONFIRMED
+                print("collab attempted (success): " + adder_userprof.user.username + " " + recip_userprof.user.username)
+                col, created = Collabs.objects.get_or_create(creator=adder_userprof, friend=recip_userprof, status=state)
+                col.save()
             else:
-                state = Collabs.CONFIRMED
-            
-            col, created = Collabs.objects.get_or_create(creator=adder_userprof, friend=recip_userprof, status=state)
-            col.save()
-            
+                print("collab attempted (fail): " + adder_userprof + " " + recip_userprof)
             
                 
                 
