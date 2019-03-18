@@ -1,0 +1,17 @@
+{% extends 'kollab/profile.html' %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+{% block button_block %}
+		<form id="add-collaborator-form">
+		{% csrf_token %}
+		<input type="hidden" name="collab-creator-username" value="{{ currentuserslug }}">
+		<input type="hidden" name="collab-recipient-username" value="{{ profileslug }}">
+			<div class='btn-group'>				  
+			  <button onclick="changeColour();sendRequest()"id="send-collab-button" type="button" class="btn btn-primary btn-rounded">Send Collab Request</button>
+			  </div>
+		</form>
+		
+		
+{% endblock %}

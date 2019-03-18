@@ -229,7 +229,7 @@ def profile(request, user_name_slug):
     if current_user.slug == user_name_slug:
         return personal_profile(request, context, current_user)
     
-    return render(request, 'kollab/profile.html', context)
+    return render(request, 'kollab/profile-general.html', context)
 
 # Method that supports Views.profile to display to the current user
 @login_required    
