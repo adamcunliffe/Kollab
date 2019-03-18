@@ -359,10 +359,13 @@ def project(request, project_name_slug):
     context['tags'] = tagset
       
     return render(request, 'kollab/project.html', context)
-    
+
+	
 def collaborators(request):
     return render(request, 'kollab/collaborators.html')
-    
+
+def chat(request):
+    return render(request, 'kollab/chat.html')
 
 def searchtags(request):
     context = {}
@@ -450,7 +453,7 @@ def get_project_results(query_tags):
     return results.distinct();
 
 	
-# A helper method 
+# A helper method for cookies
 def get_server_side_cookie(request, cookie, default_val=None): 
     val = request.session.get(cookie) 
     if not val: 

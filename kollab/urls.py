@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^collaborators/search/$', views.searchtags, name='searchtags'),
     url(r'^collaborators/search/(?P<tag_slug>[\w\-]+)/(?P<search_type>[\w\-]+)/$', views.embedded_search, name='embedded_search'),
 	
+	url(r'^chat/$', views.chat, name='chat'),
+	
 	url(r'^logoff/$', views.logoff, name='logoff'),
 	
 	url(r'^collabs/respond/$', views.rest_collab_respond, name='collab_respond'),
