@@ -15,10 +15,18 @@ import re
 
 
 def index(request):
-    return render(request, 'kollab/index.html')
+    context_dict = {}
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    response = render(request, 'kollab/index.html', context=context_dict)
+    return response
 
 
 def login_page(request):
+    if request.session.test_cookie_worked(): 
+        print("TEST COOKIE WORKED!") 
+        request.session.delete_test_cookie()
+		
     context = {}
     context['click'] = "=false"
     return render(request, 'kollab/login.html', context)
@@ -440,3 +448,40 @@ def get_project_results(query_tags):
             
     print(results.distinct())
     return results.distinct();
+
+	
+# A helper method 
+def get_server_side_cookie(request, cookie, default_val=None): 
+    val = request.session.get(cookie) 
+    if not val: 
+        val = default_val 
+    return val
+
+
+def visitor_cookie_handler(request): 
+    # Get the number of visits to the site. 
+    # We use the COOKIES.get() function to obtain the visits cookie. 
+    # If the cookie exists, the value returned is casted to an integer.
+    # If the cookie doesn't exist, then the default value of 1 is used. 
+    visits = int(get_server_side_cookie(request, 'visits', '1')) 
+    last_visit_cookie = get_server_side_cookie(request, 
+                                               'last_visit', 
+                                               str(datetime.now()))  
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7], 
+                                        '%Y-%m-%d %H:%M:%S')
+
+    # If it's been more than a day since the last visit... 
+    if (datetime.now() - last_visit_time).days > 0: 
+        visits = visits + 1 
+        # Update the last visit cookie now that we have updated the count 
+        request.session['last_visit'] = str(datetime.now())
+
+
+
+    else: 
+        # Set the last visit cookie 
+        request.session['last_visit'] = last_visit_cookie
+
+        # Update/set the visits cookie 
+        request.session['visits'] = visits
+
