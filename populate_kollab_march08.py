@@ -78,7 +78,7 @@ def populate():
          "password" : "predictable"}]'''
          
     hashedPassword = make_password("predictable", salt=None, hasher='default')
-
+    #need to give users proper first and last names
     users = [
         {"username" : "Ananya",
          "email": "Ananya@ex.com",

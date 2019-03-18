@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load kollab_template_tags %}
 
 <head>
     <meta charset="utf-8">
@@ -783,6 +784,39 @@ background-size: cover;
       </div>
    </div>
 {% endfor %}
+<div>
+	<div class="row mt presentation">
+      <div class="col-lg-4 col-md-4">
+        <h3>Collabs / Matches (TEST)</h3>
+      </div>
+	 </div>
+	
+	<div class="row">
+
+  
+    <div class="col-lg-8 col-sm-8 mb-4">
+	<form id="collabs-recieved-form">
+	{% csrf_token %}
+	<input type="hidden" name="collab-recipient-username" value="{{ currentuser }}">
+	{% for collabs in collabsrecieved %} <!-- :P -->
+     <p class="text-left">You have a request from
+		<a href="{% url 'profile' user_name_slug=collabs.creator.slug %}">{{ collabs.creator }}</a> 
+		<input type="hidden" name="collab-sender-username" value="{{ collabs.creator }}">
+		
+			<div class="btn-group btn-group-toggle" data-toggle="buttons">
+			  <label class="btn btn-success active btn-sm">
+				<input type="radio" name="options_{{ collabs.creator }}" value="confirm" autocomplete="off" checked> Collaborate
+			  </label>
+			  <label class="btn btn-success btn-sm">
+				<input type="radio" name="options_{{ collabs.creator }}" value="deny" autocomplete="off"> No, Thanks
+			  </label>
+			</div>	
+	 {% endfor %}
+	 <button onclick="confirm()" type="button" class="btn btn-warning btn-sm">Confirm Choices</button>
+	 </form>
+   </div>
+   </div>
+
  
     <!---div class="col-lg-4 col-sm-6 mb-4">
       <div class="card h-100">
@@ -811,6 +845,7 @@ background-size: cover;
     
 </body>
 
+<script src="{% scripts %}add-collaborator-button-actions.js"></script>
 
 <script type="text/javascript">
 jQuery(function ($) {

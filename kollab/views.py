@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
+from django.views.decorators.csrf import csrf_exempt
 import re
 
 
@@ -222,10 +223,18 @@ def profile(request, user_name_slug):
 @login_required    
 def personal_profile(request, context, current_user):
     print('success')
-    context['collabs-sent'] = current_user.collabs_initiated.all()
-    context['collabs-recieved'] = current_user.collabs_recieved.all()
+    context['currentuser'] = current_user.user.username
+    context['collabssent'] = current_user.collabs_initiated.all()
+    context['collabsrecieved'] = current_user.collabs_recieved.all()
     return render(request, 'kollab/profile-personal.html', context)
-
+    
+@login_required
+#@csrf_exempt
+def rest_collab_respond(request):
+    print('respond ')
+    for key, values in request.POST.lists():
+        print(key, values)
+    return HttpResponse("success")
     
 def project(request, project_name_slug):
     context = {}
