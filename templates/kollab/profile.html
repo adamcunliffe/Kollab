@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load kollab_template_tags %}
 
 <head>
     <meta charset="utf-8">
@@ -547,6 +548,8 @@ background-repeat: no-repeat;
 background-size: cover;
 }
 
+/*--  Styling for the add collaborators button --*/
+
     </style>
 
     <meta charset="utf-8">
@@ -732,14 +735,17 @@ background-size: cover;
 				{% endfor %}
 				  </div>
 				 <div>
-				  <a class="text-light"> <i>{{ location }}</i></a>
+				  
 				  </div>
 			</div>
-			<div class="col-2 align-self-end"">
-			<!-- Insert conditon here if user is logged in--->
+			
+			<form id="add-collaborator-form">
+			{% csrf_token %}
+			<input type="hidden" name="collab-creator-username" value="{{ currentuserslug }}">
+			<input type="hidden" name="collab-recipient-username" value="{{ profileslug }}">
 				<div class='btn-group'>				  
-				  <button type="button" class="btn btn-primary btn-rounded">Edit Profile</button>
-				</div>
+				  <button onclick="changeColour();sendRequest()"id="send-collab-button" type="button" class="btn btn-primary btn-rounded">Send Collab Request</button>
+			</form>
 			    
 			</div>
 		</div>
@@ -811,6 +817,8 @@ background-size: cover;
     
 </body>
 
+<script src="{% scripts %}add-collaborator-button-actions.js"></script>
+<script src="{% scripts %}chuck-norris-api.js"></script>
 
 <script type="text/javascript">
 jQuery(function ($) {
@@ -843,11 +851,18 @@ $("#close-sidebar").click(function() {
 $("#show-sidebar").click(function() {
   $(".page-wrapper").addClass("toggled");
 });
-
-
-   
-
 });
+
+
+var hasCollab {{hascollab}}
+
+$( document ).ready(function(){
+  if(hasCollab==true){
+		var status ="{{ collabstatus }}"
+		console.log("from function")
+		collabSent(status)
+	}
+})
 </script>
 </html>
 </body>

@@ -23,4 +23,5 @@ urlpatterns = [
 	url(r'^logoff/$', views.logoff, name='logoff'),
 	
 	url(r'^collabs/respond/$', views.rest_collab_respond, name='collab_respond'),
+	url(r'^collabs/init/$', views.rest_collab_initiate, name='collab_initiate'),
 ]

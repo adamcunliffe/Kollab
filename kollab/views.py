@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from kollab.forms import UserForm, UserProfileForm
-from kollab.models import Tag, UserProfile, Membership, Project
+from kollab.models import Tag, UserProfile, Membership, Project, Collabs
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -202,6 +202,10 @@ def profile(request, user_name_slug):
     except ObjectDoesNotExist:
        return HttpResponse("Does not exist...temp error page")
     
+    current_user = UserProfile.objects.get(user=request.user)
+    
+    context['currentuserslug'] = current_user.slug
+    context['profileslug'] = user_name_slug
     context['username'] = userprof.user.username
     context['firstname'] = userprof.firstname
     context['lastname'] = userprof.lastname
@@ -212,7 +216,15 @@ def profile(request, user_name_slug):
     context['tags'] = userprof.tags.all()
     context['collaborations'] = Membership.objects.filter(userProfile = UserProfile.objects.get(slug=user_name_slug))
     
-    current_user = UserProfile.objects.get(user=request.user)
+    # if they already have a collab relationship, get status
+    
+    collab = get_first_collabs(userprof, current_user)
+    if collab is None:
+        context['hascollab'] = "=false"
+    else: 
+        context['hascollab'] = "=true"
+        context['collabstatus'] =  collab.status
+    
     
     if current_user.slug == user_name_slug:
         return personal_profile(request, context, current_user)
@@ -225,17 +237,97 @@ def personal_profile(request, context, current_user):
     print('success')
     context['currentuser'] = current_user.user.username
     context['collabssent'] = current_user.collabs_initiated.all()
-    context['collabsrecieved'] = current_user.collabs_recieved.all()
+    context['collabsrecieved'] = current_user.collabs_recieved.exclude(status=Collabs.DENIED)
     return render(request, 'kollab/profile-personal.html', context)
     
 @login_required
-#@csrf_exempt
 def rest_collab_respond(request):
     print('respond ')
     for key, values in request.POST.lists():
         print(key, values)
-    return HttpResponse("success")
+    list = request.POST.getlist('collab-sender-username')
+    reciever_profile = UserProfile.objects.get(user=request.user)
     
+    for i in range(0, len(list)):
+        print(list[i])
+        sender_profile = UserProfile.objects.get(slug=list[i])
+        responsestring = request.POST.get('options-'+list[i])
+        
+        # if there is no response for this sender then skip this loop
+        if responsestring is None:
+            continue
+            
+        #going to get an instance of a collab, make sure we get the right one!
+        #use helper function to single out only the first on based on date time, a messy way of keeping it consistant
+        collab = get_first_collabs(reciever_profile, sender_profile)
+        
+        status = get_collabs_status(responsestring)
+        
+        if status is not None: 
+            print("status: " + status)
+            collab.status = status
+            collab.save()
+        else:
+            print("Error confirming collabs status...check form string")
+            
+        #might want to take this chance to search for and remove/edit any that are going the other way
+        print("To " + reciever_profile.slug + " sender " + sender_profile.slug + " response " + responsestring)
+    
+    return HttpResponse("success")
+
+@login_required
+def rest_collab_initiate(request):
+    print('respond ')
+    for key, values in request.POST.lists():
+        print(key, values)
+        
+    creator = UserProfile.objects.get(slug=request.POST.get('collab-creator-username'))
+    recipient = UserProfile.objects.get(slug=request.POST.get('collab-recipient-username'))
+    
+    collabs = Collabs.objects.create(creator=creator, friend=recipient, status=Collabs.SENT)
+    collabs.save()
+    
+    prior = collabs.id
+    
+    print("prior to get first " + str(collabs.id))
+    
+    collabs = get_first_collabs(recipient, creator)
+    after = collabs.id
+    print("after get first " + str(collabs.id))
+    
+    if prior == after:
+        print("New - collab with status: " + collabs.status)
+    else:
+        print("Old - collab with status: " + collabs.status)
+    
+    return HttpResponse('success')
+ 
+#helper function for getting the first collabs request between to users
+def get_first_collabs(reciever_profile, sender_profile):
+    co1 = Collabs.objects.filter(creator=reciever_profile, friend=sender_profile)
+    co2 = Collabs.objects.filter(creator=sender_profile, friend=reciever_profile)
+    
+    all = co1 | co2    
+    first = all.order_by('created').first()
+    
+    # this deletes all others apart from first, which was the first created collabs request
+    '''extra = all.exclude(id=first.id)
+    extra.delete()'''
+    
+    return first
+    
+# helper function for returning the Model.Collabs status string
+def get_collabs_status(responsestring):
+    if "sent" in responsestring.lower():
+        return Collabs.SENT
+    elif "conf" in responsestring.lower():
+        return Collabs.CONFIRMED
+    elif "den" in responsestring.lower():
+        return Collabs.DENIED
+    else:
+        return None
+
+ 
 def project(request, project_name_slug):
     context = {}
     try:

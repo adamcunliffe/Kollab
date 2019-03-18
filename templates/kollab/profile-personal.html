@@ -733,7 +733,7 @@ background-size: cover;
 				{% endfor %}
 				  </div>
 				 <div>
-				  <a class="text-light"> <i>{{ location }}</i></a>
+				  <small id="short" class="text-light"> </small>
 				  </div>
 			</div>
 			<div class="col-2 align-self-end"">
@@ -800,19 +800,19 @@ background-size: cover;
 	<input type="hidden" name="collab-recipient-username" value="{{ currentuser }}">
 	{% for collabs in collabsrecieved %} <!-- :P -->
      <p class="text-left">You have a request from
-		<a href="{% url 'profile' user_name_slug=collabs.creator.slug %}">{{ collabs.creator }}</a> 
-		<input type="hidden" name="collab-sender-username" value="{{ collabs.creator }}">
+		<a href="{% url 'profile' user_name_slug=collabs.creator.slug %}">{{ collabs.creator }}</a> <!-- name to change to first and last name--->
+		<input type="hidden" name="collab-sender-username" value="{{ collabs.creator.slug }}">
 		
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
-			  <label class="btn btn-success active btn-sm">
-				<input type="radio" name="options_{{ collabs.creator }}" value="confirm" autocomplete="off" checked> Collaborate
+			  <label class="btn btn-success btn-sm">
+				<input type="radio" name="options-{{ collabs.creator.slug }}" value="CONFIRMED" autocomplete="off"> Collaborate
 			  </label>
 			  <label class="btn btn-success btn-sm">
-				<input type="radio" name="options_{{ collabs.creator }}" value="deny" autocomplete="off"> No, Thanks
+				<input type="radio" name="options-{{ collabs.creator.slug }}" value="DENIED" autocomplete="off"> No, Thanks
 			  </label>
 			</div>	
 	 {% endfor %}
-	 <button onclick="confirm()" type="button" class="btn btn-warning btn-sm">Confirm Choices</button>
+	 <button onclick="respond()" type="button" class="btn btn-warning btn-sm">Confirm Choices</button>
 	 </form>
    </div>
    </div>
@@ -846,6 +846,7 @@ background-size: cover;
 </body>
 
 <script src="{% scripts %}add-collaborator-button-actions.js"></script>
+<script src="{% scripts %}chuck-norris-api.js"></script>
 
 <script type="text/javascript">
 jQuery(function ($) {
