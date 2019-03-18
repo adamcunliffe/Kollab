@@ -55,12 +55,19 @@
       <div class="sidebar-search">
         <div>
           <div class="input-group">
-            <input type="text" class="form-control search-menu" placeholder="Search...">
+		   <form method='post' action="{% url 'searchtags' %}" class="form-inline">
+			{% csrf_token %}
+            <input name="search_query" type="text" class="form-control search-menu" placeholder="Search...">
             <div class="input-group-append">
-              <span class="input-group-text">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </span>
+                 <div class="input-group">
+    				<div id="searchOption" class="btn-group">
+    					<a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Users">Users</a>
+    					<a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="Projects">Projects</a>
+    				</div>
+    				<input type="hidden" name="search_option" id="happy">
+    			</div>
             </div>
+			</form>
           </div>
         </div>
       </div>
@@ -197,6 +204,16 @@
 			{% endblock %}
 </div>
   <script type="text/javascript" src="/static/scripts/profile-sidebar-functionality.js"></script>
+  <script type="text/javascript">
+$('#searchOption a').on('click', function(){
+    var sel = $(this).data('title');
+    var tog = $(this).data('toggle');
+    $('#'+tog).prop('value', sel);
+    
+    $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
+    $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
+})
+</script>
   </body>
    </html> 
   
