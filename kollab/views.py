@@ -26,7 +26,7 @@ def login_page(request):
     if request.session.test_cookie_worked(): 
         print("TEST COOKIE WORKED!") 
         request.session.delete_test_cookie()
-		
+        
     context = {}
     context['click'] = "=false"
     return render(request, 'kollab/login.html', context)
@@ -244,10 +244,15 @@ def profile(request, user_name_slug):
 def personal_profile(request, context, current_user):
     print('success')
     context['currentuser'] = current_user.user.username
-	
-	# if for testing reasons, you want to see the denied ones too, change final argument from exclude to all()
-    context['collabssent'] = current_user.collabs_initiated.exclude(status=Collabs.DENIED)
-    context['collabsrecieved'] = current_user.collabs_recieved.exclude(status=Collabs.DENIED)
+    
+   
+    context['collabssent'] = current_user.collabs_initiated.filter(status=Collabs.SENT)
+    context['collabsrecieved'] = current_user.collabs_recieved.filter(status=Collabs.SENT)
+    context['collabsdenied'] = current_user.collabs_initiated.filter(status=Collabs.DENIED) | current_user.collabs_recieved.filter(status=Collabs.DENIED)
+    context['collabsconfirmed'] = current_user.collabs_initiated.filter(status=Collabs.CONFIRMED) | current_user.collabs_recieved.filter(status=Collabs.CONFIRMED)
+    
+    print(context['collabsconfirmed'].values())
+    
     return render(request, 'kollab/profile-personal.html', context)
     
 @login_required
@@ -360,7 +365,7 @@ def project(request, project_name_slug):
       
     return render(request, 'kollab/project.html', context)
 
-	
+    
 def collaborators(request):
     return render(request, 'kollab/collaborators.html')
 
@@ -452,7 +457,7 @@ def get_project_results(query_tags):
     print(results.distinct())
     return results.distinct();
 
-	
+    
 # A helper method for cookies
 def get_server_side_cookie(request, cookie, default_val=None): 
     val = request.session.get(cookie) 
