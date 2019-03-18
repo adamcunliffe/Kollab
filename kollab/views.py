@@ -236,7 +236,9 @@ def profile(request, user_name_slug):
 def personal_profile(request, context, current_user):
     print('success')
     context['currentuser'] = current_user.user.username
-    context['collabssent'] = current_user.collabs_initiated.all()
+	
+	# if for testing reasons, you want to see the denied ones too, change final argument from exclude to all()
+    context['collabssent'] = current_user.collabs_initiated.exclude(status=Collabs.DENIED)
     context['collabsrecieved'] = current_user.collabs_recieved.exclude(status=Collabs.DENIED)
     return render(request, 'kollab/profile-personal.html', context)
     
