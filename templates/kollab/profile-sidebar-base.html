@@ -122,6 +122,44 @@
           </li>
 		  {% endif %}
 		  {% endfor %}
+		  <li class="header-menu">
+		   <span>Requests Pending</span>
+          </li>
+		  <form id="collabs-recieved-form">
+			{% csrf_token %}
+		  {% for collabs in collabsrecieved %}
+		   <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-user"></i>
+              <span>{{ collabs.creator.firstname }} {{ collabs.creator.lastname }}</span>
+              <span class="badge badge-pill badge-warning">New</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="{% url 'profile' user_name_slug=collabs.creator.slug %}">View Profile
+                  </a>
+                </li>
+                <li>
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+					  <label class="btn btn-success btn-sm">
+						<input type="radio" name="options-{{ collabs.creator.slug }}" value="CONFIRMED" autocomplete="off"> Collaborate
+					  </label>
+					  <label class="btn btn-success btn-sm">
+						<input type="radio" name="options-{{ collabs.creator.slug }}" value="DENIED" autocomplete="off"> No, Thanks
+					  </label>
+					</div>	
+                </li>
+              </ul>
+            </div>
+          </li>
+		  {% endfor %}
+		  <li class="header-menu">
+		   <span><button onclick="respond()" type="button" class="btn btn-warning btn-sm">Confirm Choices</button>
+			</form></span>
+          </li>
+		  
+			
           <!--li class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-user"></i>

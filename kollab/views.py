@@ -290,16 +290,15 @@ def profile(request, user_name_slug):
 # Method that supports Views.profile to display to the current user
 @login_required    
 def personal_profile(request, context, current_user):
-    print('success')
+    #print('success')
+    '''
     context['currentuser'] = current_user.user.username
-    
-   
     context['collabssent'] = current_user.collabs_initiated.filter(status=Collabs.SENT)
     context['collabsrecieved'] = current_user.collabs_recieved.filter(status=Collabs.SENT)
     context['collabsdenied'] = current_user.collabs_initiated.filter(status=Collabs.DENIED) | current_user.collabs_recieved.filter(status=Collabs.DENIED)
     context['collabsconfirmed'] = current_user.collabs_initiated.filter(status=Collabs.CONFIRMED) | current_user.collabs_recieved.filter(status=Collabs.CONFIRMED)
-    
-    print(context['collabsconfirmed'].values())
+    '''
+   # print(context['collabsconfirmed'].values())
     
     return render(request, 'kollab/profile-personal.html', context)
     
@@ -479,8 +478,11 @@ def embedded_search(request, tag_slug, search_type):
 def get_user_sidebar_info(request):
     context = {}
     current_user = UserProfile.objects.get(user=request.user)
-    context['collabsconfirmed'] = current_user.collabs_initiated.filter(status=Collabs.CONFIRMED) | current_user.collabs_recieved.filter(status=Collabs.CONFIRMED)
     context['current_user'] = current_user
+    context['collabssent'] = current_user.collabs_initiated.filter(status=Collabs.SENT)
+    context['collabsrecieved'] = current_user.collabs_recieved.filter(status=Collabs.SENT)
+    context['collabsdenied'] = current_user.collabs_initiated.filter(status=Collabs.DENIED) | current_user.collabs_recieved.filter(status=Collabs.DENIED)
+    context['collabsconfirmed'] = current_user.collabs_initiated.filter(status=Collabs.CONFIRMED) | current_user.collabs_recieved.filter(status=Collabs.CONFIRMED)
     
     return context
   
