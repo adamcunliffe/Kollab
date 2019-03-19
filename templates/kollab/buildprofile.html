@@ -2,6 +2,7 @@
 <html lang="en">
 
 {% load staticfiles %}
+{% load static %}
 {% load kollab_template_tags %}
 
 <head>
@@ -67,7 +68,7 @@
                                   <div class="col-sm-4 col-sm-offset-1">
                                      <div class="picture-container">
                                           <div class="picture">
-                                              <img src= "{% static "images/default-profile.jpg" %}" class="picture-src" id="wizardPicturePreview" title=""/>
+                                              <img src= "{% get_media_prefix %}{{ picture }}" class="picture-src" id="wizardPicturePreview" title=""/>
                                               <input name="profile-pic" type="file" id="wizard-picture">
                                           </div>
                                           <h6>Choose Picture</h6>
@@ -76,11 +77,11 @@
                                   <div class="col-sm-6">
                                       <div class="form-group">
                                         <label>First Name <small>(required)</small></label>
-                                        <input name="firstName" type="text" class="form-control" placeholder="Andrew...">
+                                        <input name="firstName" type="text" class="form-control" placeholder="{{ firstname }}...">
                                       </div>
                                       <div class="form-group">
                                         <label>Last Name <small>(required)</small></label>
-                                        <input name="lastName" type="text" class="form-control" placeholder="Smith...">
+                                        <input name="lastName" type="text" class="form-control" placeholder="{{ lastname }}...">
                                       </div>
                                   </div>
                               </div>
@@ -152,7 +153,7 @@
                                             </div> 
 
                                         </div>
-										
+										<textarea name="tag-string" class="form-control rounded-0" id="tags-text-area" rows="1" maxlength="30" placeholder="Write you own tags, seperated by a space..."></textarea>
                                     </div>
 
                                 </div>
@@ -163,7 +164,7 @@
                                         <h4 class="info-text">Let your future collaborators know who you are!</h4>
                                     </div>
 									<div class="col-sm-12 col-sm">
-										 <textarea name="selfinfo" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10" maxlength="750"></textarea>
+										 <textarea name="selfinfo" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10" maxlength="750" placeholder="{{ selfinfo }}"></textarea>
 									</div>
 									
 							

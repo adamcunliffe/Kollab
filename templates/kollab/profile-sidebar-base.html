@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+ <html> 
+ {% load kollab_template_tags %}
+ {% load static %}
+ 
+ <head>
+   <link rel="stylesheet" type = "text/css" href= "/static/css/profile-sidebar-style.css">
+	
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+    <title>Sidebar template</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+      <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+      <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+<div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand">
+        <a href="#">Kollab</a>
+        <div id="close-sidebar">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+      <div class="sidebar-header">
+        <div class="user-pic">
+          <a href="{% url 'profile' user_name_slug=current_user.slug %}"><img class="img-responsive img-rounded" src="{% get_media_prefix %}{{ current_user.picture }}"
+            alt="User picture"></a>
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ current_user.firstname }}
+            <strong>{{ current_user.lastname }}</strong>
+          </span>
+          <!--span class="user-role">Singer | Songwriter</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span-->
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+      <div class="sidebar-search">
+        <div>
+          <div class="input-group">
+		   <form method='post' action="{% url 'searchtags' %}" class="form-inline">
+			{% csrf_token %}
+            <input name="search_query" type="text" class="form-control search-menu" placeholder="Search...">
+            <div class="input-group-append">
+                 <div class="input-group">
+    				<div id="searchOption" class="btn-group">
+    					<a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Users">Users</a>
+    					<a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="Projects">Projects</a>
+    				</div>
+    				<input type="hidden" name="search_option" id="happy">
+    			</div>
+            </div>
+			</form>
+          </div>
+        </div>
+      </div>
+      <!-- sidebar-search  -->
+      <div class="sidebar-menu">
+
+
+        <ul>
+		
+		
+          <li class="header-menu">
+            <span>Your Collaborators</span>
+          </li>
+		  {% for collabs in collabsconfirmed %}
+		  {% if collabs.creator.slug != current_user.slug %} <!--- if true then the collaborators profile is in the creator attribute, in friend attribute otherwise--->
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-user"></i>
+              <span>{{ collabs.creator.firstname }} {{ collabs.creator.lastname }}</span>
+              <span class="badge badge-pill badge-warning">New</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="{% url 'profile' user_name_slug=collabs.creator.slug %}">View Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Chat</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+		  {% else %}
+		  <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-user"></i>
+              <span>{{ collabs.friend.firstname }} {{ collabs.friend.lastname }}</span>
+              <span class="badge badge-pill badge-warning">New</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="{% url 'profile' user_name_slug=collabs.friend.slug %}">View Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Chat</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+		  {% endif %}
+		  {% endfor %}
+          <!--li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-user"></i>
+              <span>Jim Marston</span>
+                      <span class="badge badge-pill badge-success notification">5</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">View Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Chat</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-user"></i>
+              <span>Sadie Adler</span>
+              <span class="badge badge-pill badge-success notification">2</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">View Profile</a>
+                </li>
+                <li>
+                  <a href="#">Chat</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-user"></i>
+              <span>Molly O'Shea</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">View Profile</a>
+                </li>
+                <li>
+                  <a href="#">Chat</a>
+                </li>
+              </ul>
+            </div>
+          </li-->
+              </ul>
+      </div>
+
+
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+      <a href="#">
+        <i class="fa fa-bell" id="lovely-bell"></i>
+        <span class="badge badge-pill badge-warning notification">3</span>
+      </a>
+      <a href="#">
+        <i class="fa fa-envelope"></i>
+        <span class="badge badge-pill badge-success notification">7</span>
+      </a>
+      <a href="#">
+        <i class="fa fa-clipboard-list"></i>
+        <span class="badge badge-pill badge-success notification">3</span>
+      </a>
+      <a href="#">
+        <i class="fa fa-cog"></i>
+		</a>
+    </div>
+  </nav>
+  
+  <div>
+			{% block body_block %} 
+			{% endblock %}
+</div>
+  <script type="text/javascript" src="/static/scripts/profile-sidebar-functionality.js"></script>
+  <script type="text/javascript">
+$('#searchOption a').on('click', function(){
+    var sel = $(this).data('title');
+    var tog = $(this).data('toggle');
+    $('#'+tog).prop('value', sel);
+    
+    $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
+    $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
+})
+</script>
+  </body>
+   </html> 
+  

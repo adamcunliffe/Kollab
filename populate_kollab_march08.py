@@ -17,10 +17,12 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kollab_project.settings')
 import django
 django.setup()
 from django.contrib.auth.models import User
-from kollab.models import UserProfile, Tag, Project, Membership
+from kollab.models import UserProfile, Tag, Project, Membership, Collabs
 from django.core.files import File
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
+import random
+from django.contrib.auth.hashers import make_password
 
 # Script which simulates typical data we need to save and retrieve
 
@@ -46,7 +48,10 @@ def populate():
         
     # website used to get lat lon: https://www.mapcoordinates.net/en
     # all lat lons refere to places around glasgow, starting from the centere & going out to dumbarton...dont know why I chose dumbarton...
-    users = [
+    
+    
+    
+    '''users = [
         {"username" : "Ananya",
          "email": "Ananya@ex.com",
          "password" : "predictable"},
@@ -70,7 +75,35 @@ def populate():
          "password" : "predictable"},
          {"username" : "Harry",
          "email": "Harry@ex.com",
-         "password" : "predictable"}]
+         "password" : "predictable"}]'''
+         
+    hashedPassword = make_password("predictable", salt=None, hasher='default')
+    #need to give users proper first and last names
+    users = [
+        {"username" : "Ananya",
+         "email": "Ananya@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Barak",
+         "email": "Barak@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Charlie",
+         "email": "Charlie@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Dav",
+         "email": "Dav@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Ebo",
+         "email": "Ebo@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Faye",
+         "email": "Faye@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Gerry",
+         "email": "Gerry@ex.com",
+         "password" : hashedPassword},
+         {"username" : "Harry",
+         "email": "Harry@ex.com",
+         "password" : hashedPassword}]
          
     userProfiles =[
          {"selfinfo" : string,
@@ -141,6 +174,36 @@ def populate():
         preset_memberships_1,
         preset_memberships_2,
         preset_memberships_3 ]
+        
+    preset_collabs_1 = [
+        users[0],
+        users[4],
+        users[5] ]
+        
+    preset_collabs_2 = [
+        users[1],
+        users[6],
+        users[7],
+        users[4],
+        users[5],]
+        
+    preset_collabs_3 = [
+        users[2],
+        users[4],
+        users[5] ]
+    
+    preset_collabs_4 = [
+        users[3],
+        users[4],
+        users[5],
+        users[6],]
+        
+        
+    collabs = [
+        preset_collabs_1,
+        preset_collabs_2,
+        preset_collabs_3,
+        preset_collabs_4]
     
     # iterating through data to functions
     
@@ -201,6 +264,33 @@ def populate():
                 index = mem % len(tags)
                 members[mem].tags.add(Tag.objects.filter(name = tags[index]).first())
                 
+    
+    # adds Collabs (friends) an randomly sets them to sent or confirmed setting for testing
+    for i in range(0, len(collabs)):
+        preset_collab = collabs[i]
+        collab_adder = preset_collab[0]
+        print("add collabs " + collab_adder['username'])
+        user = User.objects.get(username=collab_adder['username'])
+        adder_userprof = UserProfile.objects.get(user=user)
+        
+        #now go through the rest of the list and create an instance of Collabs for each initiated by the adder_userprof
+        for j in range(1, len(preset_collab)):
+            recipiant = preset_collab[j]
+            user = User.objects.get(username=recipiant['username'])
+            recip_userprof = UserProfile.objects.get(user=user)
+            
+            if not adder_userprof.collabs_recieved.filter(creator=recip_userprof).exists():      
+                if random.randint(0,1) == 1:
+                    state = Collabs.SENT
+                else:
+                    state = Collabs.CONFIRMED
+                print("collab attempted (success): " + adder_userprof.user.username + " " + recip_userprof.user.username)
+                col, created = Collabs.objects.get_or_create(creator=adder_userprof, friend=recip_userprof, status=state)
+                col.save()
+            else:
+                print("collab attempted (fail): " + adder_userprof + " " + recip_userprof)
+            
+                
                 
 # functions for adding to database
 
@@ -216,6 +306,8 @@ def add_user(user, userProfile):
     newuser, created = User.objects.get_or_create(username=user['username'], email=user['email'], password=user['password'])
     newuser.save()
     profile, created = UserProfile.objects.get_or_create(user=newuser)
+    profile.firstname = user['username']
+    profile.lastname = "Test"+str(random.randint(1,100))
     profile.lat = userProfile['lat']
     profile.lon = userProfile['lon']
     profile.selfinfo = userProfile['selfinfo']
