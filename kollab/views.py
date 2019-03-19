@@ -137,10 +137,11 @@ def buildprofile(request):
 def buildprofile_data(request):
     if request.method == 'POST':
         tags = request.POST.getlist('tags', '')
-        tag_string = request.POST.get('tag-string', '')
+        #tag_string = request.POST.get('tag-string', '')
         print(tags)
         
-        tags += clean(tag_string)
+        if request.POST.get('tag-string', '') is not "":
+            tags += clean(request.POST.get('tag-string', ''))
         
         print(tags)
         
@@ -165,22 +166,25 @@ def buildprofile_data(request):
             
         if request.POST.get('selfinfo','') is not "":
             prof.selfinfo = request.POST.get('selfinfo','')
+            
         print(prof.firstname)
         prof.save()
         
         # reset tags
-        prof.tags.clear()
         
-        for i in range(0, len(tags)):
-            if Tag.objects.filter(name=tags[i].lower()).exists():
-                tag = Tag.objects.filter(name=tags[i].lower()).first()
-                print(tag)
-            else:
-                tag = Tag.objects.create(name=tags[i])
-                print(tag)
-            tag.save()
+        if tags is not "":        
+            prof.tags.clear()
             
-            prof.tags.add(tag)
+            for i in range(0, len(tags)):
+                if Tag.objects.filter(name=tags[i].lower()).exists():
+                    tag = Tag.objects.filter(name=tags[i].lower()).first()
+                    print(tag)
+                else:
+                    tag = Tag.objects.create(name=tags[i])
+                    print(tag)
+                tag.save()
+                
+                prof.tags.add(tag)
         
         prof.save()
         return HttpResponseRedirect(reverse('profile', kwargs={'user_name_slug': prof.slug}))

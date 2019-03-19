@@ -37,8 +37,8 @@
       </div>
       <div class="sidebar-header">
         <div class="user-pic">
-          <img class="img-responsive img-rounded" src="{% get_media_prefix %}{{ current_user.picture }}"
-            alt="User picture">
+          <a href="{% url 'profile' user_name_slug=current_user.slug %}"><img class="img-responsive img-rounded" src="{% get_media_prefix %}{{ current_user.picture }}"
+            alt="User picture"></a>
         </div>
         <div class="user-info">
           <span class="user-name">{{ current_user.firstname }}
