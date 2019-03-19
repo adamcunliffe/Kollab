@@ -133,12 +133,15 @@
               <i class="fa fa-user"></i>
               <span>{{ collabs.creator.firstname }} {{ collabs.creator.lastname }}</span>
               <span class="badge badge-pill badge-warning">New</span>
+			  <input type="hidden" name="collab-recipient-username" value="{{ currentuser }}">
+			  <input type="hidden" name="collab-sender-username" value="{{ collabs.creator.slug }}">
             </a>
             <div class="sidebar-submenu">
               <ul>
                 <li>
                   <a href="{% url 'profile' user_name_slug=collabs.creator.slug %}">View Profile
                   </a>
+				  
                 </li>
                 <li>
                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -154,11 +157,12 @@
             </div>
           </li>
 		  {% endfor %}
+		  {% if collabsrecieved %}
 		  <li class="header-menu">
 		   <span><button onclick="respond()" type="button" class="btn btn-warning btn-sm">Confirm Choices</button>
 			</form></span>
           </li>
-		  
+		  {% endif %}
 			
           <!--li class="sidebar-dropdown">
             <a href="#">
