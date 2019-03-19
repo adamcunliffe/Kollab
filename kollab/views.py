@@ -141,7 +141,10 @@ def buildprofile_data(request):
         print(tags)
         
         if request.POST.get('tag-string', '') is not "":
-            tags += clean(request.POST.get('tag-string', ''))
+            if tags is not "":
+                tags += clean(request.POST.get('tag-string', ''))
+            else:
+                tags = clean(request.POST.get('tag-string', ''))
         
         print(tags)
         
