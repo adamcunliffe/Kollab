@@ -80,6 +80,33 @@
 		
           <li class="header-menu">
             <span>Your Collaborators</span>
+
+                       <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-plus"></i>
+              <span>New Requests</span>
+                      <span class="badge badge-pill badge-success notification">3</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                 <a href="#">John Johnson</a>
+                </li>
+                <li>
+                  <a href="#">Simon Simonson</a>
+                </li>
+                 <li>
+                  <a href="#">Timmy Tim McTimson</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="">
+            <a href="#">
+            </a>
+          </li>
+          
           </li>
 		  {% for collabs in collabsconfirmed %}
 		  {% if collabs.creator.slug != current_user.slug %} <!--- if true then the collaborators profile is in the creator attribute, in friend attribute otherwise--->
