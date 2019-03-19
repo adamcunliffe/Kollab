@@ -177,24 +177,33 @@ def populate():
         
     preset_collabs_1 = [
         users[0],
-        users[5],
-        users[2],
-        users[7] ]
+        users[4],
+        users[5] ]
         
     preset_collabs_2 = [
-        users[4],
+        users[1],
+        users[6],
         users[7],
-        users[1]]
+        users[4],
+        users[5],]
         
     preset_collabs_3 = [
-        users[6],
-        users[0],
-        users[1]]
+        users[2],
+        users[4],
+        users[5] ]
+    
+    preset_collabs_4 = [
+        users[3],
+        users[4],
+        users[5],
+        users[6],]
+        
         
     collabs = [
         preset_collabs_1,
         preset_collabs_2,
-        preset_collabs_3 ]
+        preset_collabs_3,
+        preset_collabs_4]
     
     # iterating through data to functions
     

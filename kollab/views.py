@@ -112,25 +112,60 @@ def secondstep(request):
 
 @login_required        
 def buildprofile(request):
-    return render(request, 'kollab/buildprofile.html')
+    context = {}
+    
+    loc_user = request.user #User.objects.get(username="test5")
+        
+    user_query = UserProfile.objects.filter(user=loc_user)
+    
+    user = user_query[0]
+    
+    if user is not None:    
+        context['picture'] = user.picture
+        context['firstname'] = user.firstname
+        context['lastname'] = user.lastname
+        context['selfinfo'] = "I like to... \n\n\n I am interested in..."
+    else:
+        context['picture'] = "/default-profile.jpg"
+        context['firstname'] = "Andrew"
+        context['lastname'] = "Smith"
+        context['selfinfo'] = "I like to... \n\n\n I am interested in..."
+    
+    return render(request, 'kollab/buildprofile.html', context)
 
 @login_required
 def buildprofile_data(request):
     if request.method == 'POST':
         tags = request.POST.getlist('tags', '')
+        tag_string = request.POST.get('tag-string', '')
+        print(tags)
+        
+        tags += clean(tag_string)
+        
         print(tags)
         
         pic = request.POST.get('profile-pic','')
         print(pic)
         
+        print_post(request)
+        
         loc_user = request.user #User.objects.get(username="test5")
+        form = {}
         
         prof, created = UserProfile.objects.get_or_create(user=loc_user)        
-        prof.picture = request.FILES.get('profile-pic', '')
-        prof.selfinfo = request.POST.get('selfinfo','')
-        prof.firstname = request.POST.get('firstName','')
-        prof.lastname = request.POST.get('lastName','')
+        
+        if request.POST.get('firstName','') is not "":
+            prof.firstname = request.POST.get('firstName','')
             
+        if request.POST.get('lastName','') is not "":
+            prof.lastname = request.POST.get('lastName','')
+            
+        if request.FILES.get('profile-pic', '') is not "":
+            prof.picture = request.FILES.get('profile-pic', '')
+            
+        if request.POST.get('selfinfo','') is not "":
+            prof.selfinfo = request.POST.get('selfinfo','')
+        print(prof.firstname)
         prof.save()
         
         # reset tags
@@ -264,8 +299,7 @@ def personal_profile(request, context, current_user):
 @login_required
 def rest_collab_respond(request):
     print('respond ')
-    for key, values in request.POST.lists():
-        print(key, values)
+    print_post(request)
     list = request.POST.getlist('collab-sender-username')
     reciever_profile = UserProfile.objects.get(user=request.user)
     
@@ -384,7 +418,7 @@ def chat(request):
 def searchtags(request):
     context = {}
     context = get_user_sidebar_info(request)
-	
+    
     if request.method == 'POST':
         
         raw_query = request.POST.get('search_query', None)
@@ -416,7 +450,7 @@ def searchtags(request):
 def embedded_search(request, tag_slug, search_type):
     context = {}
     context = get_user_sidebar_info(request)
-	
+    
     query_tags = []
     
     query_tags.append(tag_slug.lower())
@@ -443,6 +477,10 @@ def get_user_sidebar_info(request):
     
     return context
   
+ # Helper method to print post requests
+def print_post(request):
+    for key, values in request.POST.lists():
+        print(key, values)
 
 # remove everything that is not a letter or regular space, return array
 def clean(raw_query):
