@@ -58,23 +58,29 @@
           </span>
         </div>
       </div>
-      <!-- sidebar-header  -->
-      <div class="sidebar-search">
+
+        <div class="sidebar-search">
         <div>
           <div class="input-group">
-            <input type="text" class="form-control search-menu" placeholder="Search...">
+		   <form method='post' action="{% url 'searchtags' %}" class="form-inline">
+			{% csrf_token %}
+            <input name="search_query" type="text" class="form-control search-menu" placeholder="Search...">
             <div class="input-group-append">
-              <span class="input-group-text">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </span>
+                 <div class="input-group">
+    				<div id="searchOption" class="btn-group">
+    					<a class="btn btn-primary btn-sm active text-light" data-toggle="happy" data-title="Users">Users</a>
+    					<a class="btn btn-primary btn-sm notActive text-light" data-title="Projects" data-toggle="happy">Projects</a>
+    				</div>
+    				<input type="hidden" name="search_option" id="happy">
+    			</div>
             </div>
+			</form>
           </div>
         </div>
       </div>
+
       <!-- sidebar-search  -->
       <div class="sidebar-menu">
-
-
         <ul>
           <li class="header-menu">
             <span>Your Projects</span>
@@ -113,32 +119,69 @@
 
       <!-- sidebar-menu  -->
     </div>
-    <!-- sidebar-content  -->
+
     <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-bell popup show" ></i>
-		
-        <span class="badge badge-pill badge-warning notification">3</span>
-      </a>
-      <a href="collaborators.html">
-        <i class="fa fa-user"></i>
+
+          <!-- Chat envelope  -->
+
+           <a href="#">
+        <i class="fa fa-envelope"></i>
         <span class="badge badge-pill badge-success notification">7</span>
       </a>
-      <a href="projects.html">
+
+          <!-- Project clipboard  -->
+
+      <a href="#">
         <i class="fa fa-clipboard-list"></i>
         <span class="badge badge-pill badge-success notification">3</span>
       </a>
+
+          <!-- Notification bell  -->
+
+      <a href="#">
+            <div class="popup" onclick="myFunction(),removeElement()">
+        <i class="fa fa-bell"></i>
+                  <div class="element", id = "numberOfNotifications">
+        <span class="badge badge-pill badge-warning notification">10</span>
+                  </div>
+  <span class="popuptext" id="myPopup">You have 7 new messages and 3 project updates!</span>
+            </div>
+      </a>
+
+<script>
+
+// When the user clicks on notification bell, open the notification popup
+
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+
+// When the user clicks on notification bell, remove the number of new notifications
+
+function removeElement() {
+ var element = document.getElementById("numberOfNotifications");
+    element.parentNode.removeChild(element);
+}
+
+</script>
+
+<!-- Edit profile cog  -->
+
       <a href="#">
         <i class="fa fa-cog"></i>
-      </a>
+		</a>
     </div>
+
   </nav>
- <div>
+  
+  <div>
 			{% block body_block %} 
 			{% endblock %}
 </div>
 
 	<script type="text/javascript" src="/static/scripts/project-sidebar-functionality.js"></script>
+</div>
 </body>
 
 
