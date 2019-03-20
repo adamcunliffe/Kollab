@@ -47,31 +47,31 @@ def populate():
 
     ## generic lorum ipsum style text...in the fashion of Bob Ross
 
-    stringAnanya = "Hi, my name is Ananya! I'm a cat loving guitarist and film student from Glasgow, Scotland" \
+    stringananya = "Hi, my name is Ananya! I'm a cat loving guitarist and film student from Glasgow, Scotland. " \
                    "I'm hoping to find some local film-makers or actors to help collaborate on my final year project." \
                    "Fans of horror films - let me know!"
 
-    stringBarak = "I'm Barak and I live to play guitar. I live in Edinburgh, so if any local fans of indie/rock music" \
+    stringbarak = "I'm Barak and I live to play guitar. I live in Edinburgh, so if any local fans of indie/rock music " \
                   "want to start a band - let me know! I'm also a fan of acting, so if anyone needs any part-time" \
                   "actors for fun projects, I'd love to help."
 
-    stringCharlie = "The name is Charlie, and I'm an actor from London. I travel a lot, so I'm happy to collaborate" \
-                    "on projects across the UK. I have been acting for 15 years and would love to be part of a few" \
+    stringcharlie = "The name is Charlie, and I'm an actor from London. I travel a lot, so I'm happy to collaborate " \
+                    "on projects across the UK. I have been acting for 15 years and would love to be part of a few " \
                     "experimental films."
 
-    stringDav = "I'm Dav, and I love to paint and make art. If anyone in Scotland wants to work on some big murals," \
+    stringdav = "I'm Dav, and I love to paint and make art. If anyone in Scotland wants to work on some big murals, " \
                 "I'd love to be a part of that."
 
-    stringEbo = "I'm Ebony or Ebo for short. I'm a musician, specifically a guitarist, and would love to work with " \
-                "some local musicians on some folk projects. Influences include Bob Dylan, The Avett Brothers," \
+    stringebo = "I'm Ebony or Ebo for short. I'm a musician, specifically a guitarist, and would love to work with " \
+                "some local musicians on some folk projects. Influences include Bob Dylan, The Avett Brothers, " \
                 "Mumford & Sons and NWA"
 
-    stringFaye = "Heyyyy, I'm Fayeeeeee. I'm a bass player from Scotland who lives and breathes METAL. Applicants" \
+    stringfaye = "Heyyyy, I'm Fayeeeeee. I'm a bass player from Scotland who lives and breathes METAL. Applicants " \
                  "must love Metallica, Mastodon and nights out at Catty. Let's start a band!"
 
-    stringGerry = "My name is Gerry. I'm a 50 year old cinematographer with over 25 years in th"
+    stringgerry = "My name is Gerry. I'm a 50 year old cinematographer with over 25 years in the industry."
 
-    stringHarry = "I'm Harry"
+    stringharry = "I'm Harry, let's start a rock band!!!"
 
 
     # website used to get lat lon: https://www.mapcoordinates.net/en
@@ -132,43 +132,43 @@ def populate():
          "password": hashedPassword}]
 
     userProfiles = [
-        {"selfinfo": stringAnanya,
+        {"selfinfo": stringananya,
          "picture": "static/images/ananya.jpg",
          "lat": 55.87473302,
          "lon": -4.28724289},
-        {"selfinfo": stringBarak,
+        {"selfinfo": stringbarak,
          "picture": "static/images/barak.jpg",
          "lat": 55.87473302,
          "lon": -4.28724289},
-        {"selfinfo": stringCharlie,
+        {"selfinfo": stringcharlie,
          "picture": "static/images/charlie.jpg",
          "lat": 55.87473302,
          "lon": -4.28724289},
-        {"selfinfo": stringDav,
+        {"selfinfo": stringdav,
          "picture": "static/images/dav.jpg",
          "lat": 55.87473302,
          "lon": -4.28724289},
-        {"selfinfo": stringEbo,
+        {"selfinfo": stringebo,
          "picture": "static/images/ebo.jpg",
          "lat": 55.87473302,
          "lon": -4.28724289},
-        {"selfinfo": stringFaye,
+        {"selfinfo": stringfaye,
          "picture": "static/images/faye.jpg",
          "lat": 55.87473302,
          "lon": -4.28724289},
-        {"selfinfo": stringGerry,
-         "picture": "static/images/pexels-photo-1942037.jpg",
+        {"selfinfo": stringgerry,
+         "picture": "static/images/gerry.jpg",
          "lat": 55.87473302,
          "lon": -4.28724289},
-        {"selfinfo": stringHarry,
-         "picture": "static/images/pexels-photo-1942037.jpg",
+        {"selfinfo": stringharry,
+         "picture": "static/images/harry.jpg",
          "lat": 55.87473302,
          "lon": -4.28724289}]
 
     projects = [
         {"name": "Magic Music",
          "picture": "static/images/pexels-photo-1120162.jpg",
-         "short": "Music documentory from glasgow",
+         "short": "Music documentery from Glasgow",
          "long": "This is your creation - and it's just as unique and special as you are. "},
         {"name": "Weegie Funk Legends",
          "picture": "static/images/pexels-photo-1813124.jpg",
