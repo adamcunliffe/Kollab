@@ -182,7 +182,6 @@
                 </li>
               </ul>
             </div>
-          </li>
 		  {% endfor %}
 		  {% if collabsrecieved %}
 		  <li class="header-menu">
@@ -249,19 +248,55 @@
       <!-- sidebar-menu  -->
     </div>
     <!-- sidebar-content  -->
-    <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-bell" id="lovely-bell"></i>
-        <span class="badge badge-pill badge-warning notification">3</span>
-      </a>
-      <a href="#">
+
+      <div class="sidebar-footer">
+
+          <!-- Chat envelope  -->
+
+           <a href="#">
         <i class="fa fa-envelope"></i>
         <span class="badge badge-pill badge-success notification">7</span>
       </a>
+
+          <!-- Project clipboard  -->
+
       <a href="#">
         <i class="fa fa-clipboard-list"></i>
         <span class="badge badge-pill badge-success notification">3</span>
       </a>
+
+          <!-- Notification bell  -->
+
+      <a href="#">
+            <div class="popup" onclick="myFunction(),removeElement()">
+        <i class="fa fa-bell"></i>
+                  <div class="element", id = "numberOfNotifications">
+        <span class="badge badge-pill badge-warning notification">10</span>
+                  </div>
+  <span class="popuptext" id="myPopup">You have 7 new messages and 3 project updates!</span>
+            </div>
+      </a>
+
+<script>
+
+// When the user clicks on notification bell, open the notification popup
+
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+
+// When the user clicks on notification bell, remove the number of new notifications
+
+function removeElement() {
+ var element = document.getElementById("numberOfNotifications");
+    element.parentNode.removeChild(element);
+}
+
+</script>
+
+<!-- Edit profile cog  -->
+
       <a href="#">
         <i class="fa fa-cog"></i>
 		</a>
@@ -283,6 +318,7 @@ $('#searchOption a').on('click', function(){
     $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
 })
 </script>
+</div>
   </body>
    </html> 
   
