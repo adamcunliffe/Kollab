@@ -12,34 +12,4 @@
 {% endblock %}
 			    
 {% block test_collabs_messages %}
-<div>
-	<div class="row mt presentation">
-      <div class="col-lg-4 col-md-4">
-        <h3>Collab requests pending</h3>
-      </div>
-	 </div>
-	
-	<div class="row">
-    <div class="col-lg-8 col-sm-8 mb-4">
-	<form id="collabs-recieved-form">
-	{% csrf_token %}
-	<input type="hidden" name="collab-recipient-username" value="{{ currentuser }}">
-	{% for collabs in collabsrecieved %} <!-- :P -->
-     <p class="text-left">You have a request from
-		<a href="{% url 'profile' user_name_slug=collabs.creator.slug %}">{{ collabs.creator.firstname }} {{ collabs.creator.lastname }}</a> <!-- name to change to first and last name--->
-		<input type="hidden" name="collab-sender-username" value="{{ collabs.creator.slug }}">
-		
-			<div class="btn-group btn-group-toggle" data-toggle="buttons">
-			  <label class="btn btn-success btn-sm">
-				<input type="radio" name="options-{{ collabs.creator.slug }}" value="CONFIRMED" autocomplete="off"> Collaborate
-			  </label>
-			  <label class="btn btn-success btn-sm">
-				<input type="radio" name="options-{{ collabs.creator.slug }}" value="DENIED" autocomplete="off"> No, Thanks
-			  </label>
-			</div>	
-	 {% endfor %}
-	 <button onclick="respond()" type="button" class="btn btn-warning btn-sm">Confirm Choices</button>
-	 </form>
-   </div>
-   </div>
 {% endblock %}
