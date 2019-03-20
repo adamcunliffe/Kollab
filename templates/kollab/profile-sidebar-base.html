@@ -21,6 +21,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
+
 </head>
 <body>
 <div class="page-wrapper chiller-theme toggled">
@@ -44,6 +45,11 @@
           <span class="user-name">{{ current_user.firstname }}
             <strong>{{ current_user.lastname }}</strong>
           </span>
+
+            <a href="/"><small>Sign Out</small>
+          <i class="fas fa-sign-out-alt"></i>
+           </a>
+
           <!--span class="user-role">Singer | Songwriter</span>
           <span class="user-status">
             <i class="fa fa-circle"></i>
@@ -80,33 +86,6 @@
 		
           <li class="header-menu">
             <span>Your Collaborators</span>
-
-                       <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-plus"></i>
-              <span>New Requests</span>
-                      <span class="badge badge-pill badge-success notification">3</span>
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                 <a href="#">John Johnson</a>
-                </li>
-                <li>
-                  <a href="#">Simon Simonson</a>
-                </li>
-                 <li>
-                  <a href="#">Timmy Tim McTimson</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="">
-            <a href="#">
-            </a>
-          </li>
-          
           </li>
 		  {% for collabs in collabsconfirmed %}
 		  {% if collabs.creator.slug != current_user.slug %} <!--- if true then the collaborators profile is in the creator attribute, in friend attribute otherwise--->
@@ -248,20 +227,56 @@
 
       <!-- sidebar-menu  -->
     </div>
-    <!-- sidebar-content  -->
-    <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-bell" id="lovely-bell"></i>
-        <span class="badge badge-pill badge-warning notification">3</span>
-      </a>
-      <a href="#">
+      <!-- sidebar-content  -->
+
+      <div class="sidebar-footer">
+
+          <!-- Chat envelope  -->
+
+           <a href="#">
         <i class="fa fa-envelope"></i>
         <span class="badge badge-pill badge-success notification">7</span>
       </a>
+
+          <!-- Project clipboard  -->
+
       <a href="#">
         <i class="fa fa-clipboard-list"></i>
         <span class="badge badge-pill badge-success notification">3</span>
       </a>
+
+          <!-- Notification bell  -->
+
+      <a href="#">
+            <div class="popup" onclick="myFunction(),removeElement()">
+        <i class="fa fa-bell"></i>
+                  <div class="element", id = "numberOfNotifications">
+        <span class="badge badge-pill badge-warning notification">10</span>
+                  </div>
+  <span class="popuptext" id="myPopup">You have 7 new messages and 3 project updates!</span>
+            </div>
+      </a>
+
+<script>
+
+// When the user clicks on notification bell, open the notification popup
+
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+
+// When the user clicks on notification bell, remove the number of new notifications
+
+function removeElement() {
+ var element = document.getElementById("numberOfNotifications");
+    element.parentNode.removeChild(element);
+}
+
+</script>
+
+<!-- Edit profile cog  -->
+
       <a href="#">
         <i class="fa fa-cog"></i>
 		</a>
