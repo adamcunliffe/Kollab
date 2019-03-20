@@ -118,9 +118,8 @@ def buildprofile(request):
         
     user_query = UserProfile.objects.filter(user=loc_user)
     
-    user = user_query[0]
-    
-    if user is not None:    
+    if user_query.exists():  
+        user = user_query[0]    
         context['picture'] = user.picture
         context['firstname'] = user.firstname
         context['lastname'] = user.lastname
