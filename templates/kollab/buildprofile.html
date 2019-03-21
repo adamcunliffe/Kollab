@@ -83,7 +83,14 @@
                                         <label>Last Name <small>(required)</small></label>
                                         <input name="lastName" type="text" class="form-control" placeholder="{{ lastname }}...">
                                       </div>
+
+                                      Grant Kollab access to your geolocation? (Helps match you with local users).
+                                      <input type = "button" value = "Yes" onclick="getLocation()">
+                                      <p id="demo"></p>
                                   </div>
+
+
+
                               </div>
                             </div>
                             <div class="tab-pane" id="account">
@@ -166,7 +173,6 @@
 									<div class="col-sm-12 col-sm">
 										 <textarea name="selfinfo" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10" maxlength="750" placeholder="{{ selfinfo }}"></textarea>
 									</div>
-									
 							
                                 </div>
                             </div>
@@ -206,11 +212,10 @@
 	<script src="{% bootstrap %}js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="{% bootstrap %}js/jquery.bootstrap.wizard.js" type="text/javascript"></script>
 	<!-- <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script> -->
-	
-	<!--  Kollab JS Files 
+
 	<script src="{% scripts %}signup.js" type="text/javascript"></script>
 
-	<!--  Plugin for the Wizard -->
+	<!-- Plugin for the Wizard -->
 	<script src="{% bootstrap %}js/gsdk-bootstrap-wizard.js"></script>
 
 	<!--  More information about jquery.validate here: http://jqueryvalidation.org/	 -->
