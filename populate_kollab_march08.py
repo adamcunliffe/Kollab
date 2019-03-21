@@ -47,31 +47,33 @@ def populate():
 
     ## generic lorum ipsum style text...in the fashion of Bob Ross
 
-    stringananya = "Hi, my name is Ananya! I'm a cat loving guitarist and film student from Glasgow, Scotland. " \
+    stringananya = "Hi, my name is Ananya! I'm a cat loving guitarist and film student from Glasgow, Scotland" \
                    "I'm hoping to find some local film-makers or actors to help collaborate on my final year project." \
                    "Fans of horror films - let me know!"
 
-    stringbarak = "I'm Barak and I live to play guitar. I live in Edinburgh, so if any local fans of indie/rock music " \
+    stringbarak = "I'm Barak and I live to play guitar. I live in Edinburgh, so if any local fans of indie/rock music" \
                   "want to start a band - let me know! I'm also a fan of acting, so if anyone needs any part-time" \
                   "actors for fun projects, I'd love to help."
 
-    stringcharlie = "The name is Charlie, and I'm an actor from London. I travel a lot, so I'm happy to collaborate " \
-                    "on projects across the UK. I have been acting for 15 years and would love to be part of a few " \
+    stringcharlie = "The name is Charlie, and I'm an actor from London. I travel a lot, so I'm happy to collaborate" \
+                    "on projects across the UK. I have been acting for 15 years and would love to be part of a few" \
                     "experimental films."
 
-    stringdav = "I'm Dav, and I love to paint and make art. If anyone in Scotland wants to work on some big murals, " \
+    stringdav = "I'm Dav, and I love to paint and make art. If anyone in Scotland wants to work on some big murals," \
                 "I'd love to be a part of that."
 
     stringebo = "I'm Ebony or Ebo for short. I'm a musician, specifically a guitarist, and would love to work with " \
-                "some local musicians on some folk projects. Influences include Bob Dylan, The Avett Brothers, " \
+                "some local musicians on some folk projects. Influences include Bob Dylan, The Avett Brothers," \
                 "Mumford & Sons and NWA"
 
-    stringfaye = "Heyyyy, I'm Fayeeeeee. I'm a bass player from Scotland who lives and breathes METAL. Applicants " \
-                 "must love Metallica, Mastodon and nights out at Catty. Let's start a band!"
+    stringfaye = "Heyyyy, I'm Fayeeeeee. I'm a bass player from Scotland who lives and breathes METAL. Applicants" \
+                 " must love Metallica, Mastodon and nights out at Catty. Let's start a band!"
 
-    stringgerry = "My name is Gerry. I'm a 50 year old cinematographer with over 25 years in the industry."
+    stringgerry = "My name is Gerry. I'm a 50 year old cinematographer with over 25 years in the business. Drop me " \
+                  "a message if you have any interesting visual projects in mind."
 
-    stringharry = "I'm Harry, let's start a rock band!!!"
+    stringharry = "I'm Harry and I like the bass. Looking to start a rock band in Glaasgow! Influences include" \
+                  "The Strokes, The Killers and Radiohead."
 
 
     # website used to get lat lon: https://www.mapcoordinates.net/en
@@ -168,16 +170,17 @@ def populate():
     projects = [
         {"name": "Magic Music",
          "picture": "static/images/pexels-photo-1120162.jpg",
-         "short": "Music documentery from Glasgow",
-         "long": "This is your creation - and it's just as unique and special as you are. "},
+         "short": "Music documentary from Glasgow",
+         "long": "We're making a documentary about the local music scene in Glasgow! Calling all film makers, musicians"
+                 "and artists!"},
         {"name": "Weegie Funk Legends",
          "picture": "static/images/pexels-photo-1813124.jpg",
          "short": "Fusion // Low-Fi // Weegie-Wave",
-         "long": "Have fun with it. I spend a lot of time walking around in the woods and talking to trees, and squirrels, and little rabbits and stuff. "},
+         "long": "We're the Weegie Funk Legends. A 4-piece from Glasgow. Rocking your face off since 2018."},
         {"name": "Taming of the Shew",
          "picture": "static/images/pexels-photo-1049746.jpg",
          "short": "Glasgow Youth Theater",
-         "long": "Automatically, all of these beautiful, beautiful things will happen. Let's have a nice tree right here."}]
+         "long": "Glasgow Youth Theater is putting on a performance of William Shakespeare's The Taming of the Shrew"}]
 
     preset_memberships_1 = [
         {"user": users[0]},
