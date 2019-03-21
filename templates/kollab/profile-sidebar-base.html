@@ -21,7 +21,6 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
-
 </head>
 <body>
 <div class="page-wrapper chiller-theme toggled">
@@ -45,11 +44,6 @@
           <span class="user-name">{{ current_user.firstname }}
             <strong>{{ current_user.lastname }}</strong>
           </span>
-
-            <a href="/"><small>Sign Out</small>
-          <i class="fas fa-sign-out-alt"></i>
-           </a>
-
           <!--span class="user-role">Singer | Songwriter</span>
           <span class="user-status">
             <i class="fa fa-circle"></i>
@@ -63,13 +57,9 @@
           <div class="input-group">
 		   <form method='post' action="{% url 'searchtags' %}" class="form-inline">
 			{% csrf_token %}
-            <input name="search_query" type="text" class="form-control search-menu" placeholder="Search...">
+            <input name="search_query" type="text" class="form-control search-menu" placeholder="Singer, Painter...">
             <div class="input-group-append">
                  <div class="input-group">
-    				<div id="searchOption" class="btn-group">
-    					<a class="btn btn-primary btn-sm active text-light" data-toggle="happy" data-title="Users">Users</a>
-    					<a class="btn btn-primary btn-sm notActive text-light" data-toggle="happy" data-title="Projects">Projects</a>
-    				</div>
     				<input type="hidden" name="search_option" id="happy">
     			</div>
             </div>
@@ -86,6 +76,9 @@
 		
           <li class="header-menu">
             <span>Your Collaborators</span>
+
+
+
           </li>
 		  {% for collabs in collabsconfirmed %}
 		  {% if collabs.creator.slug != current_user.slug %} <!--- if true then the collaborators profile is in the creator attribute, in friend attribute otherwise--->
@@ -231,18 +224,22 @@
 
       <div class="sidebar-footer">
 
-          <!-- Chat envelope  -->
+           <!-- Create New Project -->
 
-           <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
+           <a href="newproject.html">
+        <i class="fa fa-plus"></i>
+      </a>
+
+          <!-- Collaborators -->
+
+           <a href="/kollab/allcollaborators/">
+        <i class="fa fa-users"></i>
       </a>
 
           <!-- Project clipboard  -->
 
-      <a href="#">
+      <a href="/kollab/allprojects/">
         <i class="fa fa-clipboard-list"></i>
-        <span class="badge badge-pill badge-success notification">3</span>
       </a>
 
           <!-- Notification bell  -->
@@ -277,9 +274,6 @@ function removeElement() {
 
 <!-- Edit profile cog  -->
 
-      <a href="#">
-        <i class="fa fa-cog"></i>
-		</a>
     </div>
   </nav>
   
